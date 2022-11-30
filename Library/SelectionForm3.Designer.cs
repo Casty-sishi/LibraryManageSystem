@@ -30,8 +30,18 @@
         {
             this.Borrow_Return_Tab_Control = new System.Windows.Forms.TabControl();
             this.Library_Book_TabPage = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.Book_TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Publisher_TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
             this.Admin_Name_Label = new System.Windows.Forms.Label();
@@ -39,6 +49,11 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.Borrow_Return_Tab_Control.SuspendLayout();
+            this.Library_Book_TabPage.SuspendLayout();
+            this.Book_TabPage.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.Publisher_TabPage.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.Admin_Info_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +71,10 @@
             // 
             // Library_Book_TabPage
             // 
+            this.Library_Book_TabPage.Controls.Add(this.button4);
+            this.Library_Book_TabPage.Controls.Add(this.button3);
+            this.Library_Book_TabPage.Controls.Add(this.groupBox2);
+            this.Library_Book_TabPage.Controls.Add(this.groupBox1);
             this.Library_Book_TabPage.Location = new System.Drawing.Point(4, 25);
             this.Library_Book_TabPage.Name = "Library_Book_TabPage";
             this.Library_Book_TabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -64,8 +83,46 @@
             this.Library_Book_TabPage.Text = "图书借阅";
             this.Library_Book_TabPage.UseVisualStyleBackColor = true;
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(262, 338);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 5;
+            this.button4.Text = "清空勾选";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(181, 338);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "确认借阅";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(262, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(269, 326);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "图书";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(250, 326);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "读者";
+            // 
             // Book_TabPage
             // 
+            this.Book_TabPage.Controls.Add(this.groupBox3);
+            this.Book_TabPage.Controls.Add(this.groupBox4);
             this.Book_TabPage.Location = new System.Drawing.Point(4, 25);
             this.Book_TabPage.Name = "Book_TabPage";
             this.Book_TabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -74,8 +131,44 @@
             this.Book_TabPage.Text = "图书归还";
             this.Book_TabPage.UseVisualStyleBackColor = true;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.listView1);
+            this.groupBox3.Location = new System.Drawing.Point(7, 169);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(524, 198);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "借阅书籍";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
+            // 
+            // listView1
+            // 
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(6, 22);
+            this.listView1.MultiSelect = false;
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(511, 170);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Location = new System.Drawing.Point(6, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(524, 163);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "读者";
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
             // Publisher_TabPage
             // 
+            this.Publisher_TabPage.Controls.Add(this.groupBox5);
+            this.Publisher_TabPage.Controls.Add(this.groupBox6);
             this.Publisher_TabPage.Location = new System.Drawing.Point(4, 25);
             this.Publisher_TabPage.Name = "Publisher_TabPage";
             this.Publisher_TabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -83,6 +176,38 @@
             this.Publisher_TabPage.TabIndex = 1;
             this.Publisher_TabPage.Text = "图书罚款";
             this.Publisher_TabPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.listView2);
+            this.groupBox5.Location = new System.Drawing.Point(7, 169);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(524, 198);
+            this.groupBox5.TabIndex = 6;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "过期书籍";
+            // 
+            // listView2
+            // 
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(6, 22);
+            this.listView2.MultiSelect = false;
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(511, 170);
+            this.listView2.TabIndex = 0;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(524, 163);
+            this.groupBox6.TabIndex = 7;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "读者";
             // 
             // Admin_Info_Box
             // 
@@ -96,7 +221,7 @@
             this.Admin_Info_Box.Size = new System.Drawing.Size(217, 411);
             this.Admin_Info_Box.TabIndex = 4;
             this.Admin_Info_Box.TabStop = false;
-            this.Admin_Info_Box.Text = "AdminInfomation";
+            this.Admin_Info_Box.Text = "管理员";
             // 
             // Borrow_Return_Mangager_Button
             // 
@@ -152,6 +277,11 @@
             this.Name = "SelectionForm3";
             this.Text = "SelectionForm3";
             this.Borrow_Return_Tab_Control.ResumeLayout(false);
+            this.Library_Book_TabPage.ResumeLayout(false);
+            this.Book_TabPage.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.Publisher_TabPage.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.Admin_Info_Box.ResumeLayout(false);
             this.Admin_Info_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).EndInit();
@@ -162,14 +292,24 @@
         #endregion
 
         private System.Windows.Forms.TabControl Borrow_Return_Tab_Control;
-        private System.Windows.Forms.TabPage Library_Book_TabPage;
-        private System.Windows.Forms.TabPage Book_TabPage;
-        private System.Windows.Forms.TabPage Publisher_TabPage;
+        public System.Windows.Forms.TabPage Library_Book_TabPage;
+        public System.Windows.Forms.TabPage Book_TabPage;
+        public System.Windows.Forms.TabPage Publisher_TabPage;
         private System.Windows.Forms.GroupBox Admin_Info_Box;
         private System.Windows.Forms.Button Borrow_Return_Mangager_Button;
         private System.Windows.Forms.Label Admin_Name_Label;
         private System.Windows.Forms.PictureBox Admin_Picture_Box;
         private System.Windows.Forms.Button Book_Manager_Button;
         private System.Windows.Forms.Button Reader_Manager_Button;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
