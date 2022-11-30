@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectionForm));
             this.Reader_Tab_Control = new System.Windows.Forms.TabControl();
             this.Reader_Info_TabPage = new System.Windows.Forms.TabPage();
             this.Readers_Info_Table = new System.Windows.Forms.GroupBox();
@@ -36,7 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -118,7 +118,6 @@
             this.Readers_Info_Table.Controls.Add(this.label1);
             this.Readers_Info_Table.Controls.Add(this.textBox6);
             this.Readers_Info_Table.Controls.Add(this.label7);
-            this.Readers_Info_Table.Controls.Add(this.textBox4);
             this.Readers_Info_Table.Controls.Add(this.textBox3);
             this.Readers_Info_Table.Controls.Add(this.label6);
             this.Readers_Info_Table.Controls.Add(this.textBox2);
@@ -182,13 +181,6 @@
             this.label7.Text = "有效期至";
             this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(19, 129);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(86, 25);
-            this.textBox4.TabIndex = 20;
-            // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(349, 52);
@@ -247,18 +239,19 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(455, 127);
+            this.button2.Location = new System.Drawing.Point(455, 124);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(63, 23);
+            this.button2.Size = new System.Drawing.Size(63, 26);
             this.button2.TabIndex = 12;
             this.button2.Text = "清空";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(387, 128);
+            this.button1.Location = new System.Drawing.Point(387, 124);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(62, 23);
+            this.button1.Size = new System.Drawing.Size(62, 26);
             this.button1.TabIndex = 9;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
@@ -282,9 +275,11 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(19, 24);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(86, 99);
+            this.pictureBox1.Size = new System.Drawing.Size(86, 120);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
@@ -487,7 +482,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Admin_Name_Label.AutoSize = true;
-            this.Admin_Name_Label.Location = new System.Drawing.Point(69, 175);
+            this.Admin_Name_Label.Location = new System.Drawing.Point(73, 188);
             this.Admin_Name_Label.Name = "Admin_Name_Label";
             this.Admin_Name_Label.Size = new System.Drawing.Size(79, 15);
             this.Admin_Name_Label.TabIndex = 1;
@@ -498,10 +493,12 @@
             // Admin_Picture_Box
             // 
             this.Admin_Picture_Box.ErrorImage = null;
+            this.Admin_Picture_Box.Image = ((System.Drawing.Image)(resources.GetObject("Admin_Picture_Box.Image")));
             this.Admin_Picture_Box.InitialImage = null;
-            this.Admin_Picture_Box.Location = new System.Drawing.Point(23, 34);
+            this.Admin_Picture_Box.Location = new System.Drawing.Point(26, 21);
             this.Admin_Picture_Box.Name = "Admin_Picture_Box";
-            this.Admin_Picture_Box.Size = new System.Drawing.Size(172, 129);
+            this.Admin_Picture_Box.Size = new System.Drawing.Size(172, 163);
+            this.Admin_Picture_Box.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Admin_Picture_Box.TabIndex = 0;
             this.Admin_Picture_Box.TabStop = false;
             this.Admin_Picture_Box.Click += new System.EventHandler(this.Admin_Picture_Box_Click);
@@ -592,7 +589,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox6;

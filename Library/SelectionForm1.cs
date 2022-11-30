@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,22 @@ namespace Library
         public SelectionForm()
         {
             InitializeComponent();
+        }
+        private void LoadUserInfo(object sender,EventArgs e)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = "select * from reader;";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql,conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            //foreach(DataRow dr in db.Rows)
+            //{
+                //here to display
+            //}
+            conn.Close();
+           
+
         }
         public void SetAdminLabel(String admName)
         {
@@ -101,6 +118,16 @@ namespace Library
 
         private void Admin_Picture_Box_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.textBox1.Clear();
+            this.textBox2.Clear();
+            this.textBox3.Clear();
+            this.textBox5.Clear();
+            this.textBox6.Clear();
 
         }
     }
