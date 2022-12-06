@@ -26,5 +26,20 @@ namespace Library
         {
 
         }
+
+        private void SelectionForm2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public void listView3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

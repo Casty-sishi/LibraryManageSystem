@@ -118,6 +118,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "读者";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // Book_TabPage
             // 
@@ -291,25 +292,25 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl Borrow_Return_Tab_Control;
+        public System.Windows.Forms.TabControl Borrow_Return_Tab_Control;
         public System.Windows.Forms.TabPage Library_Book_TabPage;
         public System.Windows.Forms.TabPage Book_TabPage;
         public System.Windows.Forms.TabPage Publisher_TabPage;
-        private System.Windows.Forms.GroupBox Admin_Info_Box;
-        private System.Windows.Forms.Button Borrow_Return_Mangager_Button;
-        private System.Windows.Forms.Label Admin_Name_Label;
-        private System.Windows.Forms.PictureBox Admin_Picture_Box;
-        private System.Windows.Forms.Button Book_Manager_Button;
-        private System.Windows.Forms.Button Reader_Manager_Button;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.GroupBox groupBox6;
+        public System.Windows.Forms.GroupBox Admin_Info_Box;
+        public System.Windows.Forms.Button Borrow_Return_Mangager_Button;
+        public System.Windows.Forms.Label Admin_Name_Label;
+        public System.Windows.Forms.PictureBox Admin_Picture_Box;
+        public System.Windows.Forms.Button Book_Manager_Button;
+        public System.Windows.Forms.Button Reader_Manager_Button;
+        public System.Windows.Forms.Button button4;
+        public System.Windows.Forms.Button button3;
+        public System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.GroupBox groupBox3;
+        public System.Windows.Forms.ListView listView1;
+        public System.Windows.Forms.GroupBox groupBox4;
+        public System.Windows.Forms.GroupBox groupBox5;
+        public System.Windows.Forms.ListView listView2;
+        public System.Windows.Forms.GroupBox groupBox6;
     }
 }

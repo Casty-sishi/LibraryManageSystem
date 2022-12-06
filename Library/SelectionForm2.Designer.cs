@@ -32,25 +32,34 @@
             this.Library_Book_TabPage = new System.Windows.Forms.TabPage();
             this.Readers_Info_Table = new System.Windows.Forms.GroupBox();
             this.Readers_Info_List = new System.Windows.Forms.GroupBox();
-            this.Book_TabPage = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.Publisher_TabPage = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Book_TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.bIsbn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pubName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.wName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bOutDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bIntro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Publisher_TabPage = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
@@ -61,6 +70,7 @@
             this.TwoPanel = new System.Windows.Forms.Panel();
             this.Book_Tab_Control.SuspendLayout();
             this.Library_Book_TabPage.SuspendLayout();
+            this.Readers_Info_List.SuspendLayout();
             this.Book_TabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.Publisher_TabPage.SuspendLayout();
@@ -103,12 +113,64 @@
             // 
             // Readers_Info_List
             // 
+            this.Readers_Info_List.Controls.Add(this.listView3);
+            this.Readers_Info_List.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Readers_Info_List.Location = new System.Drawing.Point(7, 169);
             this.Readers_Info_List.Name = "Readers_Info_List";
             this.Readers_Info_List.Size = new System.Drawing.Size(524, 198);
             this.Readers_Info_List.TabIndex = 0;
             this.Readers_Info_List.TabStop = false;
             this.Readers_Info_List.Text = "馆藏列表";
+            // 
+            // listView3
+            // 
+            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17,
+            this.columnHeader18,
+            this.columnHeader6});
+            this.listView3.FullRowSelect = true;
+            this.listView3.GridLines = true;
+            this.listView3.HideSelection = false;
+            this.listView3.Location = new System.Drawing.Point(7, 24);
+            this.listView3.MultiSelect = false;
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(511, 170);
+            this.listView3.TabIndex = 1;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            this.listView3.SelectedIndexChanged += new System.EventHandler(this.listView3_SelectedIndexChanged);
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Isbn";
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "图书编号";
+            this.columnHeader15.Width = 92;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "图书名字";
+            this.columnHeader16.Width = 90;
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "图书状态";
+            this.columnHeader17.Width = 100;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "图书位置";
+            this.columnHeader18.Width = 111;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "入库日期";
+            this.columnHeader6.Width = 86;
             // 
             // Book_TabPage
             // 
@@ -134,6 +196,16 @@
             // 
             // listView1
             // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.bIsbn,
+            this.pubName,
+            this.tName,
+            this.wName,
+            this.bVersion,
+            this.bName,
+            this.bOutDate,
+            this.bPrice,
+            this.bIntro});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -144,6 +216,55 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // bIsbn
+            // 
+            this.bIsbn.Text = "Isbn";
+            // 
+            // pubName
+            // 
+            this.pubName.Text = "出版社";
+            this.pubName.Width = 68;
+            // 
+            // tName
+            // 
+            this.tName.Text = "图书类型";
+            this.tName.Width = 81;
+            // 
+            // wName
+            // 
+            this.wName.DisplayIndex = 8;
+            this.wName.Text = "图书作者";
+            // 
+            // bVersion
+            // 
+            this.bVersion.DisplayIndex = 3;
+            this.bVersion.Text = "图书版本";
+            this.bVersion.Width = 80;
+            // 
+            // bName
+            // 
+            this.bName.DisplayIndex = 4;
+            this.bName.Text = "图书名称";
+            this.bName.Width = 79;
+            // 
+            // bOutDate
+            // 
+            this.bOutDate.DisplayIndex = 5;
+            this.bOutDate.Text = "出版日期";
+            // 
+            // bPrice
+            // 
+            this.bPrice.DisplayIndex = 6;
+            this.bPrice.Text = "图书价格";
+            this.bPrice.Width = 76;
+            // 
+            // bIntro
+            // 
+            this.bIntro.DisplayIndex = 7;
+            this.bIntro.Text = "图书简介";
+            this.bIntro.Width = 76;
             // 
             // groupBox2
             // 
@@ -179,22 +300,15 @@
             // listView2
             // 
             this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader13,
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22,
-            this.columnHeader23,
-            this.columnHeader24});
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
             this.listView2.FullRowSelect = true;
             this.listView2.GridLines = true;
             this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(6, 22);
+            this.listView2.Location = new System.Drawing.Point(7, 22);
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
             this.listView2.Size = new System.Drawing.Size(511, 170);
@@ -202,67 +316,30 @@
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeader13
+            // columnHeader1
             // 
-            this.columnHeader13.Text = "读者编号";
-            this.columnHeader13.Width = 76;
+            this.columnHeader1.Text = "出版社编号";
+            this.columnHeader1.Width = 105;
             // 
-            // columnHeader14
+            // columnHeader2
             // 
-            this.columnHeader14.DisplayIndex = 2;
-            this.columnHeader14.Text = "读者姓名";
-            this.columnHeader14.Width = 76;
+            this.columnHeader2.Text = "出版社名称";
+            this.columnHeader2.Width = 98;
             // 
-            // columnHeader15
+            // columnHeader3
             // 
-            this.columnHeader15.DisplayIndex = 1;
-            this.columnHeader15.Text = "读者类别";
-            this.columnHeader15.Width = 76;
+            this.columnHeader3.Text = "出版社地址";
+            this.columnHeader3.Width = 95;
             // 
-            // columnHeader16
+            // columnHeader4
             // 
-            this.columnHeader16.Text = "注册日期";
-            this.columnHeader16.Width = 76;
+            this.columnHeader4.Text = "出版社邮箱";
+            this.columnHeader4.Width = 104;
             // 
-            // columnHeader17
+            // columnHeader5
             // 
-            this.columnHeader17.Text = "帐号状态";
-            this.columnHeader17.Width = 76;
-            // 
-            // columnHeader18
-            // 
-            this.columnHeader18.Text = "违规次数";
-            this.columnHeader18.Width = 76;
-            // 
-            // columnHeader19
-            // 
-            this.columnHeader19.Text = "联系方式";
-            this.columnHeader19.Width = 76;
-            // 
-            // columnHeader20
-            // 
-            this.columnHeader20.Text = "用户性别";
-            this.columnHeader20.Width = 76;
-            // 
-            // columnHeader21
-            // 
-            this.columnHeader21.Text = "有效期";
-            this.columnHeader21.Width = 76;
-            // 
-            // columnHeader22
-            // 
-            this.columnHeader22.Text = "历史借阅";
-            this.columnHeader22.Width = 76;
-            // 
-            // columnHeader23
-            // 
-            this.columnHeader23.Text = "在借书籍";
-            this.columnHeader23.Width = 76;
-            // 
-            // columnHeader24
-            // 
-            this.columnHeader24.Text = "备注";
-            this.columnHeader24.Width = 76;
+            this.columnHeader5.Text = "出版社联系方式";
+            this.columnHeader5.Width = 114;
             // 
             // groupBox4
             // 
@@ -348,8 +425,10 @@
             this.Controls.Add(this.TwoPanel);
             this.Name = "SelectionForm2";
             this.Text = "SelectionForm2";
+            this.Load += new System.EventHandler(this.SelectionForm2_Load);
             this.Book_Tab_Control.ResumeLayout(false);
             this.Library_Book_TabPage.ResumeLayout(false);
+            this.Readers_Info_List.ResumeLayout(false);
             this.Book_TabPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.Publisher_TabPage.ResumeLayout(false);
@@ -366,33 +445,42 @@
         public System.Windows.Forms.TabControl Book_Tab_Control;
         public System.Windows.Forms.TabPage Book_TabPage;
         public System.Windows.Forms.TabPage Publisher_TabPage;
-        private System.Windows.Forms.GroupBox Admin_Info_Box;
-        private System.Windows.Forms.Button Borrow_Return_Mangager_Button;
-        private System.Windows.Forms.Label Admin_Name_Label;
-        private System.Windows.Forms.PictureBox Admin_Picture_Box;
-        private System.Windows.Forms.Button Book_Manager_Button;
-        private System.Windows.Forms.Button Reader_Manager_Button;
+        public System.Windows.Forms.GroupBox Admin_Info_Box;
+        public System.Windows.Forms.Button Borrow_Return_Mangager_Button;
+        public System.Windows.Forms.Label Admin_Name_Label;
+        public System.Windows.Forms.PictureBox Admin_Picture_Box;
+        public System.Windows.Forms.Button Book_Manager_Button;
+        public System.Windows.Forms.Button Reader_Manager_Button;
         public System.Windows.Forms.TabPage Library_Book_TabPage;
-        private System.Windows.Forms.GroupBox Readers_Info_Table;
-        private System.Windows.Forms.GroupBox Readers_Info_List;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader20;
-        private System.Windows.Forms.ColumnHeader columnHeader21;
-        private System.Windows.Forms.ColumnHeader columnHeader22;
-        private System.Windows.Forms.ColumnHeader columnHeader23;
-        private System.Windows.Forms.ColumnHeader columnHeader24;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Panel TwoPanel;
+        public System.Windows.Forms.GroupBox Readers_Info_Table;
+        public System.Windows.Forms.GroupBox Readers_Info_List;
+        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.ListView listView1;
+        public System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.GroupBox groupBox3;
+        public System.Windows.Forms.ListView listView2;
+        public System.Windows.Forms.GroupBox groupBox4;
+        public System.Windows.Forms.Panel TwoPanel;
+        public System.Windows.Forms.ColumnHeader columnHeader1;
+        public System.Windows.Forms.ColumnHeader columnHeader2;
+        public System.Windows.Forms.ColumnHeader columnHeader3;
+        public System.Windows.Forms.ColumnHeader columnHeader4;
+        public System.Windows.Forms.ColumnHeader columnHeader5;
+        public System.Windows.Forms.ColumnHeader bIsbn;
+        public System.Windows.Forms.ColumnHeader pubName;
+        public System.Windows.Forms.ColumnHeader tName;
+        public System.Windows.Forms.ColumnHeader wName;
+        public System.Windows.Forms.ColumnHeader bVersion;
+        public System.Windows.Forms.ColumnHeader bName;
+        public System.Windows.Forms.ColumnHeader bOutDate;
+        public System.Windows.Forms.ColumnHeader bPrice;
+        public System.Windows.Forms.ColumnHeader bIntro;
+        public System.Windows.Forms.ListView listView3;
+        public System.Windows.Forms.ColumnHeader columnHeader15;
+        public System.Windows.Forms.ColumnHeader columnHeader16;
+        public System.Windows.Forms.ColumnHeader columnHeader17;
+        public System.Windows.Forms.ColumnHeader columnHeader18;
+        public System.Windows.Forms.ColumnHeader columnHeader6;
+        public System.Windows.Forms.ColumnHeader columnHeader7;
     }
 }
