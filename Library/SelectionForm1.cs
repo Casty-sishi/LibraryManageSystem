@@ -13,6 +13,8 @@ namespace Library
 {
     public partial class SelectionForm : Form
     {
+        //ListView curViewOne = new ListView();
+        //ListView curViewTwo = new ListView();
         SelectionForm2 bookform = new SelectionForm2 { TopLevel = false, FormBorderStyle = FormBorderStyle.None };
         SelectionForm3 borrowreturnform = new SelectionForm3 { TopLevel = false, FormBorderStyle = FormBorderStyle.None };
         public SelectionForm()
@@ -41,16 +43,27 @@ namespace Library
             }
 
         }
-        private void LoadBookInLibrary() //Todo 对应form2的馆藏信息 有个逻辑处理(bid->bname)
+        private void LoadBookInLibrary(ListView curList) //Todo 对应form2的馆藏信息 有个逻辑处理(bid->bname)
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select ");
+            String sql = String.Format("select bIsbn,bName,bId,bState,bksId,bInDate from books natural join bookinfo;");
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
-            this.Readers_Info_Data.Items.Clear();//先将列表视图中现有行清空
+            curList.Items.Clear();//先将列表视图中现有行清空
+            foreach (DataRow dr in db.Rows)
+            {
+                ListViewItem item = new ListViewItem(dr["bIsbn"].ToString());
+                item.SubItems.Add(dr["bId"].ToString());
+                item.SubItems.Add(dr["bName"].ToString());
+                item.SubItems.Add(dr["bState"].ToString());
+                item.SubItems.Add(dr["bksId"].ToString());
+                item.SubItems.Add(dr["bInDate"].ToString());
+                curList.Items.Add(item);
+                //here to display
+            }
         }
         private void LoadBookInfo() //对应form2的图书信息
         {
@@ -88,7 +101,7 @@ namespace Library
             conn.Close();//查询到数据之后就可以关掉了
             this.Readers_Info_Data.Items.Clear();//先将列表视图中现有行清空
         }
-        private void LoadUserInfo() //对应form1的读者列表
+        private void LoadUserInfo(ListView curview) //对应curview的读者信息
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
@@ -97,7 +110,7 @@ namespace Library
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
-            this.Readers_Info_Data.Items.Clear();//先将列表视图中现有行清空
+            curview.Items.Clear();//先将列表视图中现有行清空
             foreach (DataRow dr in db.Rows)
             {
                 ListViewItem item = new ListViewItem(dr["uID"].ToString());
@@ -112,7 +125,7 @@ namespace Library
                 item.SubItems.Add(dr["uCurbor"].ToString());
                 item.SubItems.Add(dr["uHasBor"].ToString());
                 item.SubItems.Add(dr["remark"].ToString());
-                Readers_Info_Data.Items.Add(item);
+                curview.Items.Add(item);
                 //here to display
             }
         }
@@ -174,6 +187,7 @@ namespace Library
             this.Reader_Tab_Control.Controls.Add(bookform.Library_Book_TabPage);
             LoadPubilsherInfo();
             LoadBookInfo();
+            LoadBookInLibrary(bookform.listView3);
             bookform.Show();
         }
 
@@ -183,6 +197,10 @@ namespace Library
             this.Reader_Tab_Control.Controls.Add(borrowreturnform.Library_Book_TabPage);
             this.Reader_Tab_Control.Controls.Add(borrowreturnform.Book_TabPage);
             this.Reader_Tab_Control.Controls.Add(borrowreturnform.Publisher_TabPage);
+            LoadUserInfo(borrowreturnform.Readers_Info_Data);
+            LoadUserInfo(borrowreturnform.listView7);
+            LoadUserInfo(borrowreturnform.listView8);
+            LoadBookInLibrary(borrowreturnform.listView9);
             borrowreturnform.Show();
         }
 
@@ -192,7 +210,7 @@ namespace Library
             this.Reader_Tab_Control.Controls.Add(this.Reader_Info_TabPage);
             this.Reader_Tab_Control.Controls.Add(this.tabPage1);
             this.Reader_Tab_Control.Show();
-            LoadUserInfo();//加载读者信息
+            LoadUserInfo(this.Readers_Info_Data);//加载读者信息
         }
 
         private void Admin_Name_Label_Click(object sender, EventArgs e)
@@ -220,7 +238,7 @@ namespace Library
 
         private void SelectionForm_Load(object sender, EventArgs e)
         {
-            LoadUserInfo();
+            LoadUserInfo(this.Readers_Info_Data); // 一开始Load的时候应该是form1的ListView
         }
 
         private void Readers_Info_Data_SelectedIndexChanged(object sender, EventArgs e)

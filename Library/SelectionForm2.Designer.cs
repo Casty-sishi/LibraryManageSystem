@@ -160,7 +160,7 @@
             // columnHeader17
             // 
             this.columnHeader17.Text = "图书状态";
-            this.columnHeader17.Width = 100;
+            this.columnHeader17.Width = 90;
             // 
             // columnHeader18
             // 
