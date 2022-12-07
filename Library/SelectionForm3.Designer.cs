@@ -58,7 +58,6 @@
             this.Book_TabPage = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.listView4 = new System.Windows.Forms.ListView();
-            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -82,7 +81,6 @@
             this.Publisher_TabPage = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -109,6 +107,7 @@
             this.Admin_Picture_Box = new System.Windows.Forms.PictureBox();
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
+            this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Borrow_Return_Tab_Control.SuspendLayout();
             this.Library_Book_TabPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -361,7 +360,6 @@
             // listView4
             // 
             this.listView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
             this.columnHeader32,
             this.columnHeader33,
             this.columnHeader34,
@@ -377,10 +375,6 @@
             this.listView4.TabIndex = 2;
             this.listView4.UseCompatibleStateImageBehavior = false;
             this.listView4.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader31
-            // 
-            this.columnHeader31.Text = "Isbn";
             // 
             // columnHeader32
             // 
@@ -546,12 +540,12 @@
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader37,
             this.columnHeader38,
             this.columnHeader39,
             this.columnHeader40,
             this.columnHeader41,
-            this.columnHeader42});
+            this.columnHeader42,
+            this.columnHeader43});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -562,10 +556,6 @@
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader37
-            // 
-            this.columnHeader37.Text = "Isbn";
             // 
             // columnHeader38
             // 
@@ -580,17 +570,17 @@
             // columnHeader40
             // 
             this.columnHeader40.Text = "图书状态";
-            this.columnHeader40.Width = 100;
+            this.columnHeader40.Width = 82;
             // 
             // columnHeader41
             // 
-            this.columnHeader41.Text = "图书位置";
-            this.columnHeader41.Width = 111;
+            this.columnHeader41.Text = "是否超时";
+            this.columnHeader41.Width = 78;
             // 
             // columnHeader42
             // 
-            this.columnHeader42.Text = "入库日期";
-            this.columnHeader42.Width = 86;
+            this.columnHeader42.Text = "超时天数";
+            this.columnHeader42.Width = 77;
             // 
             // groupBox6
             // 
@@ -763,6 +753,11 @@
             this.Reader_Manager_Button.Text = "读者管理";
             this.Reader_Manager_Button.UseVisualStyleBackColor = true;
             // 
+            // columnHeader43
+            // 
+            this.columnHeader43.Text = "罚款金额";
+            this.columnHeader43.Width = 86;
+            // 
             // SelectionForm3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -859,18 +854,17 @@
         public System.Windows.Forms.ColumnHeader columnHeader29;
         public System.Windows.Forms.ColumnHeader columnHeader30;
         public System.Windows.Forms.ListView listView4;
-        public System.Windows.Forms.ColumnHeader columnHeader31;
         public System.Windows.Forms.ColumnHeader columnHeader32;
         public System.Windows.Forms.ColumnHeader columnHeader33;
         public System.Windows.Forms.ColumnHeader columnHeader34;
         public System.Windows.Forms.ColumnHeader columnHeader35;
         public System.Windows.Forms.ColumnHeader columnHeader36;
         public System.Windows.Forms.ListView listView1;
-        public System.Windows.Forms.ColumnHeader columnHeader37;
         public System.Windows.Forms.ColumnHeader columnHeader38;
         public System.Windows.Forms.ColumnHeader columnHeader39;
         public System.Windows.Forms.ColumnHeader columnHeader40;
         public System.Windows.Forms.ColumnHeader columnHeader41;
         public System.Windows.Forms.ColumnHeader columnHeader42;
+        private System.Windows.Forms.ColumnHeader columnHeader43;
     }
 }

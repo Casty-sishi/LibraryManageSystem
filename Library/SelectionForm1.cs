@@ -21,6 +21,31 @@ namespace Library
         {
             InitializeComponent();
         }
+        
+        private String getStatusName(string i)
+        {
+            switch (i)
+            {
+                case "0":
+                    return "离校";
+                case "1":
+                    return "在校";
+                default:
+                    return "退休";
+            }
+        }
+        private String getPriorityName(int i)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select pName from priority where pId = {0};",i);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return dr["pName"].ToString();
+        }
         private void LoadPubilsherInfo() //对应form2的出版社信息 Done
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
@@ -90,16 +115,27 @@ namespace Library
                 //here to display
             }
         }
-        private void LoadUserBookInfo() //对用form1的历史已借
+        private void LoadUserBookInfo(string userid) //对用form1的历史已借
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("", this.label9.Text);
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(`end`)-TO_DAYS(`start`) bHasBor\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}';", userid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
-            this.Readers_Info_Data.Items.Clear();//先将列表视图中现有行清空
+            this.listView1.Items.Clear();//先将列表视图中现有行清空
+            foreach (DataRow dr in db.Rows)
+            {
+                ListViewItem item = new ListViewItem(dr["bId"].ToString());
+                item.SubItems.Add(dr["bName"].ToString());
+                item.SubItems.Add(dr["bIsbn"].ToString());
+                item.SubItems.Add(dr["bksName"].ToString());
+                item.SubItems.Add(dr["end"].ToString());
+                item.SubItems.Add(dr["bHasBor"].ToString());
+                this.listView1.Items.Add(item);
+                //here to display
+            }
         }
         private void LoadUserInfo(ListView curview) //对应curview的读者信息
         {
@@ -115,9 +151,11 @@ namespace Library
             {
                 ListViewItem item = new ListViewItem(dr["uID"].ToString());
                 item.SubItems.Add(dr["uName"].ToString());
-                item.SubItems.Add(dr["pId"].ToString());
+                string priority = getPriorityName(int.Parse(dr["pId"].ToString()));
+                item.SubItems.Add(priority);
                 item.SubItems.Add(dr["uRegistry"].ToString());
-                item.SubItems.Add(dr["uState"].ToString());
+                string status = getStatusName(dr["uState"].ToString());
+                item.SubItems.Add(status);
                 item.SubItems.Add(dr["uViolatedTimes"].ToString());
                 item.SubItems.Add(dr["uContact"].ToString());
                 item.SubItems.Add(dr["uSex"].ToString());
@@ -211,6 +249,7 @@ namespace Library
             this.Reader_Tab_Control.Controls.Add(this.tabPage1);
             this.Reader_Tab_Control.Show();
             LoadUserInfo(this.Readers_Info_Data);//加载读者信息
+            LoadUserBookInfo("*");//加载历史已借信息
         }
 
         private void Admin_Name_Label_Click(object sender, EventArgs e)
@@ -230,8 +269,8 @@ namespace Library
             this.textBox3.Clear();
             this.textBox5.Clear();
             this.textBox6.Clear();
-            this.comboBox1.Text="";
-            this.comboBox2.Text="";
+            this.textBox7.Text="";
+            this.textBox4.Text="";
             this.label9.Text = "";
 
         }
@@ -239,6 +278,7 @@ namespace Library
         private void SelectionForm_Load(object sender, EventArgs e)
         {
             LoadUserInfo(this.Readers_Info_Data); // 一开始Load的时候应该是form1的ListView
+
         }
 
         private void Readers_Info_Data_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,9 +287,9 @@ namespace Library
             {
                 ListViewItem item = this.Readers_Info_Data.SelectedItems[0];//获取选中的第一行（一次只能选中一行）
 
-                this.comboBox1.Text = item.SubItems[2].Text; //读者类别
+                this.textBox4.Text = item.SubItems[2].Text; //读者类别
                 this.textBox1.Text = item.SubItems[1].Text;//读者姓名
-                this.comboBox2.Text = item.SubItems[4].Text;//状态
+                this.textBox7.Text = item.SubItems[4].Text;//状态
                 this.textBox2.Text = item.SubItems[5].Text;//违规次数
                 this.textBox6.Text = item.SubItems[8].Text;//有效期
                 this.textBox5.Text = item.SubItems[3].Text;//注册日期
@@ -265,6 +305,32 @@ namespace Library
 
         private void Reader_Tab_Control_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+            String uViolatedTimes = this.textBox2.Text;
+            String uvalidate = this.textBox6.Text;
+            if(uViolatedTimes.Length > 0 && uvalidate.Length > 0)
+            {
+                MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                conn.Open();
+                String sql = String.Format("update reader set uViolatedTimes={0},uValiDate='{1}' where uID ='{2}';",uViolatedTimes,uvalidate,this.label9.Text);
+                MySqlCommand command = new MySqlCommand(sql, conn);
+                int rows = command.ExecuteNonQuery();
+                if(rows> 0)
+                {
+                    MessageBox.Show("已经成功修改！");
+                    LoadUserInfo(this.Readers_Info_Data);
+                }
+                conn.Close();//查询到数据之后就可以关掉了
+            }
+            else
+            {
+                MessageBox.Show("输入为空，请重新输入！");
+            }
 
         }
     }
