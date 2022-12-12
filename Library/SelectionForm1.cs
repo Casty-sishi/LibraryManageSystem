@@ -135,19 +135,19 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select Type from typeinfo where tId ={0} ", tid);
+            String sql = String.Format("select tName from typeinfo where tId ={0} ", tid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
             DataRow dr = db.Rows[0];
-            return dr["Type"].ToString();
+            return dr["tName"].ToString();
         }
         private string GetWriterName(int wid)
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select wName from typeinfo where wId ={0} ", wid);
+            String sql = String.Format("select wName from author where wId ={0} ", wid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
