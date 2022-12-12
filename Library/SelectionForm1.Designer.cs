@@ -32,7 +32,10 @@
             this.Reader_Tab_Control = new System.Windows.Forms.TabControl();
             this.Reader_Info_TabPage = new System.Windows.Forms.TabPage();
             this.Readers_Info_Table = new System.Windows.Forms.GroupBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.textBox5 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
@@ -77,9 +80,6 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.OnePanel = new System.Windows.Forms.Panel();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
             this.Reader_Tab_Control.SuspendLayout();
             this.Reader_Info_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
@@ -142,6 +142,22 @@
             this.Readers_Info_Table.Text = "读者信息";
             this.Readers_Info_Table.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(406, 19);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.ReadOnly = true;
+            this.textBox7.Size = new System.Drawing.Size(100, 25);
+            this.textBox7.TabIndex = 30;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(154, 52);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(100, 25);
+            this.textBox4.TabIndex = 29;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -151,6 +167,14 @@
             this.label9.TabIndex = 28;
             this.label9.Text = "读者编号";
             this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(349, 88);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
+            this.textBox5.Size = new System.Drawing.Size(157, 25);
+            this.textBox5.TabIndex = 27;
             // 
             // label8
             // 
@@ -416,6 +440,7 @@
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // bId
             // 
@@ -524,30 +549,6 @@
             this.OnePanel.Name = "OnePanel";
             this.OnePanel.Size = new System.Drawing.Size(545, 406);
             this.OnePanel.TabIndex = 6;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(349, 88);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(157, 25);
-            this.textBox5.TabIndex = 27;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(154, 52);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(100, 25);
-            this.textBox4.TabIndex = 29;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(406, 19);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(100, 25);
-            this.textBox7.TabIndex = 30;
             // 
             // SelectionForm
             // 

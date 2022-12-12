@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectionForm2));
             this.Book_Tab_Control = new System.Windows.Forms.TabControl();
             this.Library_Book_TabPage = new System.Windows.Forms.TabPage();
             this.Readers_Info_Table = new System.Windows.Forms.GroupBox();
@@ -68,8 +69,13 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.TwoPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.Book_Tab_Control.SuspendLayout();
             this.Library_Book_TabPage.SuspendLayout();
+            this.Readers_Info_Table.SuspendLayout();
             this.Readers_Info_List.SuspendLayout();
             this.Book_TabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -77,6 +83,7 @@
             this.groupBox3.SuspendLayout();
             this.Admin_Info_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Book_Tab_Control
@@ -104,6 +111,10 @@
             // 
             // Readers_Info_Table
             // 
+            this.Readers_Info_Table.Controls.Add(this.label2);
+            this.Readers_Info_Table.Controls.Add(this.textBox1);
+            this.Readers_Info_Table.Controls.Add(this.label1);
+            this.Readers_Info_Table.Controls.Add(this.pictureBox1);
             this.Readers_Info_Table.Location = new System.Drawing.Point(6, 6);
             this.Readers_Info_Table.Name = "Readers_Info_Table";
             this.Readers_Info_Table.Size = new System.Drawing.Size(524, 163);
@@ -415,6 +426,41 @@
             this.TwoPanel.Size = new System.Drawing.Size(544, 401);
             this.TwoPanel.TabIndex = 6;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(8, 24);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 108);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(29, 135);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "label1";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(134, 24);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 25);
+            this.textBox1.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(148, 108);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "label2";
+            // 
             // SelectionForm2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -428,6 +474,8 @@
             this.Load += new System.EventHandler(this.SelectionForm2_Load);
             this.Book_Tab_Control.ResumeLayout(false);
             this.Library_Book_TabPage.ResumeLayout(false);
+            this.Readers_Info_Table.ResumeLayout(false);
+            this.Readers_Info_Table.PerformLayout();
             this.Readers_Info_List.ResumeLayout(false);
             this.Book_TabPage.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -436,6 +484,7 @@
             this.Admin_Info_Box.ResumeLayout(false);
             this.Admin_Info_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -482,5 +531,9 @@
         public System.Windows.Forms.ColumnHeader columnHeader18;
         public System.Windows.Forms.ColumnHeader columnHeader6;
         public System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -115,11 +115,11 @@ namespace Library
                 //here to display
             }
         }
-        private void LoadUserBookInfo(string userid) //对用form1的历史已借
+        private void LoadUserBookInfo(string userid,int type) //对用form1的历史已借 type=1说明显示的是在借的，type=0说明显示的是已还的，type=2说明是过期的
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(`end`)-TO_DAYS(`start`) bHasBor\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}';", userid);
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(`end`)-TO_DAYS(`start`) bHasBor,borrowed.Expired\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}';", userid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
@@ -127,6 +127,10 @@ namespace Library
             this.listView1.Items.Clear();//先将列表视图中现有行清空
             foreach (DataRow dr in db.Rows)
             {
+                if (type == 1 && dr["Expired"].ToString() == "1")//显示在借的，0表示未过期，1表示已过期，
+                    continue;
+                else if(type ==0 && dr["Expired"].ToString() == "0")  
+                    continue; 
                 ListViewItem item = new ListViewItem(dr["bId"].ToString());
                 item.SubItems.Add(dr["bName"].ToString());
                 item.SubItems.Add(dr["bIsbn"].ToString());
@@ -134,7 +138,7 @@ namespace Library
                 item.SubItems.Add(dr["end"].ToString());
                 item.SubItems.Add(dr["bHasBor"].ToString());
                 this.listView1.Items.Add(item);
-                //here to display
+                //here to display 这里考虑的是历史已借，不能显示正在借的。
             }
         }
         private void LoadUserInfo(ListView curview) //对应curview的读者信息
@@ -249,7 +253,7 @@ namespace Library
             this.Reader_Tab_Control.Controls.Add(this.tabPage1);
             this.Reader_Tab_Control.Show();
             LoadUserInfo(this.Readers_Info_Data);//加载读者信息
-            LoadUserBookInfo("*");//加载历史已借信息
+            //LoadUserBookInfo();//加载历史已借信息
         }
 
         private void Admin_Name_Label_Click(object sender, EventArgs e)
@@ -295,6 +299,7 @@ namespace Library
                 this.textBox5.Text = item.SubItems[3].Text;//注册日期
                 this.textBox3.Text = item.SubItems[6].Text;//联系方式
                 this.label9.Text = item.SubItems[0].Text;
+                LoadUserBookInfo(this.label9.Text,0);
             }
         }
 
@@ -331,6 +336,11 @@ namespace Library
             {
                 MessageBox.Show("输入为空，请重新输入！");
             }
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
