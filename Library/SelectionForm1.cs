@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,7 +35,7 @@ namespace Library
                     return "退休";
             }
         }
-        private String getPriorityName(int i)
+        private String GetPriorityName(int i)
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
@@ -68,6 +69,29 @@ namespace Library
             }
 
         }
+        private string GetBookState(int bState)
+        {
+            if(bState == 0)
+            {
+                return "外借中";
+            }
+            else
+            {
+                return "在架上";
+            }
+        }
+        private string GetBookLocation(int bksId)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select bksName from bookshelf where bksId = {0};", bksId);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return dr["bksName"].ToString();
+        }
         private void LoadBookInLibrary(ListView curList) //Todo 对应form2的馆藏信息 有个逻辑处理(bid->bname)
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
@@ -83,12 +107,53 @@ namespace Library
                 ListViewItem item = new ListViewItem(dr["bIsbn"].ToString());
                 item.SubItems.Add(dr["bId"].ToString());
                 item.SubItems.Add(dr["bName"].ToString());
-                item.SubItems.Add(dr["bState"].ToString());
-                item.SubItems.Add(dr["bksId"].ToString());
-                item.SubItems.Add(dr["bInDate"].ToString());
+                string bstate = GetBookState(int.Parse(dr["bState"].ToString()));
+                item.SubItems.Add(bstate); //状态 需要从编号转换成字符串
+                string location = GetBookLocation(int.Parse(dr["bksId"].ToString()));
+                item.SubItems.Add(location)  ;//图书位置 需要从编号转换成字符串
+                string date = dr["bInDate"].ToString();
+                string[] getDate = date.Split(' ');
+                date = getDate[0];
+                item.SubItems.Add(date);
                 curList.Items.Add(item);
                 //here to display
             }
+        }
+        private string GetPublisherName(int pubid)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select pName from publisher where pubId ={0} ",pubid);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return dr["pName"].ToString();
+        }
+        private string GetTypeName(int tid)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select Type from typeinfo where tId ={0} ", tid);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return dr["Type"].ToString();
+        }
+        private string GetWriterName(int wid)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select wName from typeinfo where wId ={0} ", wid);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return dr["wName"].ToString();
         }
         private void LoadBookInfo() //对应form2的图书信息
         {
@@ -103,12 +168,18 @@ namespace Library
             foreach (DataRow dr in db.Rows)
             {
                 ListViewItem item = new ListViewItem(dr["bIsbn"].ToString());
-                item.SubItems.Add(dr["pubId"].ToString());
-                item.SubItems.Add(dr["tId"].ToString());
-                item.SubItems.Add(dr["wId"].ToString());
+                string pname = GetPublisherName(int.Parse(dr["pubId"].ToString()));
+                item.SubItems.Add(pname);
+                string tname = GetTypeName(int.Parse(dr["tId"].ToString()));
+                item.SubItems.Add(tname);
+                string wname = GetWriterName(int.Parse(dr["wId"].ToString()));
+                item.SubItems.Add(wname);
                 item.SubItems.Add(dr["bVersion"].ToString());
                 item.SubItems.Add(dr["bName"].ToString());
-                item.SubItems.Add(dr["bOutDate"].ToString());
+                string date = dr["bOutDate"].ToString();
+                string[] getDate = date.Split(' ');
+                date = getDate[0];
+                item.SubItems.Add(date);
                 item.SubItems.Add(dr["bPrice"].ToString());
                 item.SubItems.Add(dr["bIntro"].ToString());
                 bookform.listView1.Items.Add(item);
@@ -155,7 +226,7 @@ namespace Library
             {
                 ListViewItem item = new ListViewItem(dr["uID"].ToString());
                 item.SubItems.Add(dr["uName"].ToString());
-                string priority = getPriorityName(int.Parse(dr["pId"].ToString()));
+                string priority = GetPriorityName(int.Parse(dr["pId"].ToString()));
                 item.SubItems.Add(priority);
                 item.SubItems.Add(dr["uRegistry"].ToString());
                 string status = getStatusName(dr["uState"].ToString());
