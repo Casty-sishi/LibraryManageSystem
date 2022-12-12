@@ -38,15 +38,15 @@ namespace Library
             {
                 ListViewItem item = this.listView1.SelectedItems[0];
 
-                this.textBox5.Text = item.SubItems[4].Text; //图书名称
+                this.textBox5.Text = item.SubItems[5].Text; //图书名称
                 this.label8.Text = item.SubItems[0].Text; //图书ISBN
-                this.comboBox2.Text = item.SubItems[3].Text;//图书版本
+                this.comboBox2.Text = item.SubItems[4].Text;//图书版本
                 this.comboBox3.Text = item.SubItems[1].Text;//出版社名字
                 this.comboBox1.Text = item.SubItems[2].Text;//图书类型
-                this.richTextBox1.Text = item.SubItems[7].Text;//图书简介
-                this.textBox13.Text = item.SubItems[8].Text;//图书作者
-                this.textBox7.Text = item.SubItems[6].Text;//图书价格
-                this.textBox6.Text = item.SubItems[5].Text;//图书出版日期
+                this.richTextBox1.Text = item.SubItems[8].Text;//图书简介
+                this.textBox13.Text = item.SubItems[3].Text;//图书作者
+                this.textBox7.Text = item.SubItems[7].Text;//图书价格
+                this.textBox6.Text = item.SubItems[6].Text;//图书出版日期
             }
         }
 
