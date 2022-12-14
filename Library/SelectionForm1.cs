@@ -198,21 +198,28 @@ namespace Library
             this.listView1.Items.Clear();//先将列表视图中现有行清空
             foreach (DataRow dr in db.Rows)
             {
-                if (type == 1 && dr["Expired"].ToString() == "1")//显示在借的，0表示未过期，1表示已过期，
-                    continue;
-                else if(type ==0 && dr["Expired"].ToString() == "0")  
-                    continue; 
+                //if (type == 1 && dr["Expired"].ToString() == "1")//显示在借的，0表示未过期，1表示已过期，
+                //    continue;
+                //else if(type ==0 && dr["Expired"].ToString() == "0")  
+                //    continue; 
                 ListViewItem item = new ListViewItem(dr["bId"].ToString());
                 item.SubItems.Add(dr["bName"].ToString());
                 item.SubItems.Add(dr["bIsbn"].ToString());
                 item.SubItems.Add(dr["bksName"].ToString());
-                item.SubItems.Add(dr["end"].ToString());
+                string returnDate = dr["end"].ToString().Split(' ')[0];
+                item.SubItems.Add(returnDate);//归还日期
                 item.SubItems.Add(dr["bHasBor"].ToString());
+                if (dr["Expired"].ToString() == "1") //过期未还
+                    item.SubItems.Add("逾期未还");
+                else if (dr["Expired"].ToString() == "0") //未过期
+                    item.SubItems.Add("借阅中"); //这个还得设置已归还和在借状态
+                else if (dr["Expired"].ToString() == "-1") //已归还
+                    item.SubItems.Add("已归还");
                 this.listView1.Items.Add(item);
                 //here to display 这里考虑的是历史已借，不能显示正在借的。
             }
         }
-        private void LoadUserInfo(ListView curview) //对应curview的读者信息
+        public void LoadUserInfo(ListView curview) //对应curview的读者信息
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
@@ -349,7 +356,36 @@ namespace Library
             this.label9.Text = "";
 
         }
-
+       private void LoadBorrwoedBook(int userid) //SelectionForm3的图书罚款
+        {
+            //MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            //conn.Open();
+            //String sql = "select * from borrowed ";
+            //MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            //DataTable db = new DataTable();
+            //adapter.Fill(db);
+            //conn.Close();//查询到数据之后就可以关掉了
+            //borrowreturnform.listView1.Items.Clear();//先将列表视图中现有行清空
+            //foreach (DataRow dr in db.Rows)
+            //{
+            //    ListViewItem item = new ListViewItem(dr["bId"].ToString());
+            //    item.SubItems.Add(dr["uName"].ToString());
+            //    string priority = GetPriorityName(int.Parse(dr["pId"].ToString()));
+            //    item.SubItems.Add(priority);
+            //    item.SubItems.Add(dr["uRegistry"].ToString());
+            //    string status = getStatusName(dr["uState"].ToString());
+            //    item.SubItems.Add(status);
+            //    item.SubItems.Add(dr["uViolatedTimes"].ToString());
+            //    item.SubItems.Add(dr["uContact"].ToString());
+            //    item.SubItems.Add(dr["uSex"].ToString());
+            //    item.SubItems.Add(dr["uValiDate"].ToString());
+            //    item.SubItems.Add(dr["uCurbor"].ToString());
+            //    item.SubItems.Add(dr["uHasBor"].ToString());
+            //    item.SubItems.Add(dr["remark"].ToString());
+            //    curview.Items.Add(item);
+            //    //here to display
+            //}
+        }
         private void SelectionForm_Load(object sender, EventArgs e)
         {
             LoadUserInfo(this.Readers_Info_Data); // 一开始Load的时候应该是form1的ListView
@@ -386,7 +422,6 @@ namespace Library
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-
             String uViolatedTimes = this.textBox2.Text;
             String uvalidate = this.textBox6.Text;
             if(uViolatedTimes.Length > 0 && uvalidate.Length > 0)
@@ -411,6 +446,11 @@ namespace Library
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

@@ -72,6 +72,7 @@
             this.ForgetPasswordButton.TabIndex = 3;
             this.ForgetPasswordButton.Text = "忘记密码";
             this.ForgetPasswordButton.UseVisualStyleBackColor = true;
+            this.ForgetPasswordButton.Click += new System.EventHandler(this.ForgetPasswordButton_Click);
             // 
             // User_Name_Label
             // 

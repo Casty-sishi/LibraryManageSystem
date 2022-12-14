@@ -49,5 +49,10 @@ namespace Library
                 
 
         }
+
+        private void ForgetPasswordButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("请联系图书馆老师！");
+        }
     }
 }

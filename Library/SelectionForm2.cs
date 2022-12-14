@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -127,6 +128,70 @@ namespace Library
             this.textBox3.Clear();//图书状态
             this.textBox4.Clear();//图书位置
             this.label7.Text = "/"; ;//图书入库日期
+        }
+
+        private void button5_Click(object sender, EventArgs e) //馆藏信息的修改，图书名字不能修改
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e) //馆藏信息添加
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)//馆藏信息删除
+        {
+            //注意如果这本书是在借状态，不能删除
+        }
+        private void DeleteBookInfo(int bkid) //馆藏删除图书信息-sql
+        {
+
+        }
+        private void InsertBookInfo(int bkid,string Location) //馆藏增加图书信息 -sql
+        {
+            
+
+        }
+        private void UpdateBookInfo(int bkid,string Location) //馆藏更新图书信息 -sql
+        { }
+
+        private void button3_Click(object sender, EventArgs e)//图书信息修改
+        {
+
+        }
+        private void UpdateBook(string isbn,string authorName,string bkName,string Location,string bookType, int bookVersion, string publisherName, double bkPrice,String outDate, String profile ) { }//图书信息修改 -sql
+        private void AddBook(string isbn, string authorName, string bkName, string Location, string bookType, int bookVersion, string publisherName, double bkPrice, String outDate, String profile) { }//图书信息增加 -sql
+
+        private void DeleteBook(string isbn) { }//删除图书信息 -sql
+        private void button8_Click(object sender, EventArgs e)//增加图书信息
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)//删除图书信息
+        {
+            //注意如果现在有人借阅这本书的，不能删除（这个Isbn对应的书）
+        }
+
+        private void button12_Click(object sender, EventArgs e)//删除出版社信息 
+        {//注意如果现有书本有这个出版社的，不能删除。
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)//添加出版社信息
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)//更新出版社信息
+        {
+
+        }
+
+        private void Reader_Manager_Button_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

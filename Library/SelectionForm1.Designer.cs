@@ -73,6 +73,7 @@
             this.bLocated = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bHasBor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ifReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
             this.Admin_Name_Label = new System.Windows.Forms.Label();
@@ -80,6 +81,13 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.OnePanel = new System.Windows.Forms.Panel();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bkindex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ifFined = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.eventId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Reader_Tab_Control.SuspendLayout();
             this.Reader_Info_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
@@ -88,12 +96,14 @@
             this.tabPage1.SuspendLayout();
             this.Admin_Info_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // Reader_Tab_Control
             // 
             this.Reader_Tab_Control.Controls.Add(this.Reader_Info_TabPage);
             this.Reader_Tab_Control.Controls.Add(this.tabPage1);
+            this.Reader_Tab_Control.Controls.Add(this.tabPage2);
             this.Reader_Tab_Control.Location = new System.Drawing.Point(243, 32);
             this.Reader_Tab_Control.Name = "Reader_Tab_Control";
             this.Reader_Tab_Control.SelectedIndex = 0;
@@ -232,6 +242,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(199, 88);
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(45, 25);
             this.textBox2.TabIndex = 17;
             // 
@@ -429,7 +440,8 @@
             this.bISBN,
             this.bLocated,
             this.bReturn,
-            this.bHasBor});
+            this.bHasBor,
+            this.ifReturn});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -471,6 +483,10 @@
             // 
             this.bHasBor.Text = "借阅天数";
             this.bHasBor.Width = 81;
+            // 
+            // ifReturn
+            // 
+            this.ifReturn.Text = "借阅状态";
             // 
             // Admin_Info_Box
             // 
@@ -550,6 +566,60 @@
             this.OnePanel.Size = new System.Drawing.Size(545, 406);
             this.OnePanel.TabIndex = 6;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.listView2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(537, 373);
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "违规记录";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listView2
+            // 
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.index,
+            this.time,
+            this.bkindex,
+            this.ifFined,
+            this.eventId});
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(6, 6);
+            this.listView2.MultiSelect = false;
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(525, 361);
+            this.listView2.TabIndex = 2;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            // 
+            // index
+            // 
+            this.index.Text = "序号";
+            // 
+            // time
+            // 
+            this.time.Text = "时间";
+            // 
+            // bkindex
+            // 
+            this.bkindex.Text = "图书编号";
+            this.bkindex.Width = 83;
+            // 
+            // ifFined
+            // 
+            this.ifFined.Text = "罚款状态";
+            this.ifFined.Width = 112;
+            // 
+            // eventId
+            // 
+            this.eventId.Text = "违规事件";
+            this.eventId.Width = 100;
+            // 
             // SelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -571,6 +641,7 @@
             this.Admin_Info_Box.ResumeLayout(false);
             this.Admin_Info_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -627,5 +698,13 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.ColumnHeader ifReturn;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ColumnHeader index;
+        private System.Windows.Forms.ColumnHeader time;
+        private System.Windows.Forms.ColumnHeader bkindex;
+        private System.Windows.Forms.ColumnHeader ifFined;
+        private System.Windows.Forms.ColumnHeader eventId;
     }
 }
