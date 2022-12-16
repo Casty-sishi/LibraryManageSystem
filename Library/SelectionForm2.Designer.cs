@@ -32,6 +32,7 @@
             this.Book_Tab_Control = new System.Windows.Forms.TabControl();
             this.Library_Book_TabPage = new System.Windows.Forms.TabPage();
             this.Readers_Info_Table = new System.Windows.Forms.GroupBox();
+            this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -67,6 +69,8 @@
             this.bPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bIntro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.button11 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -97,6 +101,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button12 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -110,6 +115,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
             this.Admin_Name_Label = new System.Windows.Forms.Label();
@@ -117,13 +124,6 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.TwoPanel = new System.Windows.Forms.Panel();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Book_Tab_Control.SuspendLayout();
             this.Library_Book_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
@@ -190,6 +190,16 @@
             this.Readers_Info_Table.TabStop = false;
             this.Readers_Info_Table.Text = "馆藏信息";
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(423, 129);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(72, 28);
+            this.button10.TabIndex = 15;
+            this.button10.Text = "删除";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(346, 128);
@@ -253,6 +263,14 @@
             this.label5.Size = new System.Drawing.Size(82, 15);
             this.label5.TabIndex = 9;
             this.label5.Text = "图书位置：";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(391, 15);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(100, 25);
+            this.textBox3.TabIndex = 6;
             // 
             // textBox2
             // 
@@ -474,6 +492,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox14);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button8);
@@ -495,7 +514,6 @@
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.textBox5);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.pictureBox2);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
@@ -503,6 +521,23 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "详细信息";
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(152, 15);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(102, 25);
+            this.textBox14.TabIndex = 22;
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(465, 116);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(59, 30);
+            this.button11.TabIndex = 21;
+            this.button11.Text = "删除";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button8
             // 
@@ -669,7 +704,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(113, 24);
+            this.label8.Location = new System.Drawing.Point(183, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(39, 15);
             this.label8.TabIndex = 1;
@@ -774,6 +809,16 @@
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "详细信息";
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(434, 12);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(75, 32);
+            this.button12.TabIndex = 13;
+            this.button12.Text = "删除";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button7
             // 
@@ -886,6 +931,26 @@
             this.label16.TabIndex = 1;
             this.label16.Text = "编号：";
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(537, 373);
+            this.tabPage1.TabIndex = 4;
+            this.tabPage1.Text = "图书类型";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(537, 373);
+            this.tabPage2.TabIndex = 5;
+            this.tabPage2.Text = "作者信息";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // Admin_Info_Box
             // 
             this.Admin_Info_Box.Controls.Add(this.Borrow_Return_Mangager_Button);
@@ -951,71 +1016,6 @@
             this.TwoPanel.Name = "TwoPanel";
             this.TwoPanel.Size = new System.Drawing.Size(544, 401);
             this.TwoPanel.TabIndex = 6;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(391, 15);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(100, 25);
-            this.textBox3.TabIndex = 6;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(423, 129);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(72, 28);
-            this.button10.TabIndex = 15;
-            this.button10.Text = "删除";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(465, 116);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(59, 30);
-            this.button11.TabIndex = 21;
-            this.button11.Text = "删除";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(434, 12);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 32);
-            this.button12.TabIndex = 13;
-            this.button12.Text = "删除";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(158, 16);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(102, 25);
-            this.textBox14.TabIndex = 22;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(537, 373);
-            this.tabPage1.TabIndex = 4;
-            this.tabPage1.Text = "图书类型";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(537, 373);
-            this.tabPage2.TabIndex = 5;
-            this.tabPage2.Text = "作者信息";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // SelectionForm2
             // 

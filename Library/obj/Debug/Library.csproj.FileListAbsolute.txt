@@ -72,3 +72,10 @@ C:\Users\HP\Desktop\library\Library\obj\Debug\Library.csproj.CoreCompileInputs.c
 C:\Users\HP\Desktop\library\Library\obj\Debug\Library.csproj.CopyComplete
 C:\Users\HP\Desktop\library\Library\obj\Debug\Library.exe
 C:\Users\HP\Desktop\library\Library\obj\Debug\Library.pdb
+E:\1Dtabase\Library\obj\Debug\Library.InputUidForm.resources
+E:\1Dtabase\Library\bin\Debug\MySqlConnector.dll
+E:\1Dtabase\Library\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+E:\1Dtabase\Library\bin\Debug\System.Threading.Tasks.Extensions.dll
+E:\1Dtabase\Library\bin\Debug\MySqlConnector.xml
+E:\1Dtabase\Library\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+E:\1Dtabase\Library\bin\Debug\System.Threading.Tasks.Extensions.xml

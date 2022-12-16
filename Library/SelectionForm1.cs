@@ -16,36 +16,49 @@ namespace Library
     {
         //ListView curViewOne = new ListView();
         //ListView curViewTwo = new ListView();
+        InputUidForm input_uid_form = new InputUidForm();
         SelectionForm2 bookform = new SelectionForm2 { TopLevel = false, FormBorderStyle = FormBorderStyle.None };
         SelectionForm3 borrowreturnform = new SelectionForm3 { TopLevel = false, FormBorderStyle = FormBorderStyle.None };
         public SelectionForm()
         {
             InitializeComponent();
         }
-        
-        private String getStatusName(string i)
+
+        private String getUserStatusName(string i)
         {
             switch (i)
             {
                 case "0":
-                    return "离校";
+                    return "无效";
                 case "1":
-                    return "在校";
+                    return "有效";
                 default:
-                    return "退休";
+                    return "违规无效";
             }
         }
         private String GetPriorityName(int i)
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select pName from priority where pId = {0};",i);
+            String sql = String.Format("select pName from priority where pId = {0};", i);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
             DataRow dr = db.Rows[0];
             return dr["pName"].ToString();
+        }
+        private int GetPriorityId(string priority)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select pId from priority where pName = '{0}';", priority);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            DataRow dr = db.Rows[0];
+            return int.Parse(dr["pId"].ToString());
         }
         private void LoadPubilsherInfo() //对应form2的出版社信息 Done
         {
@@ -71,13 +84,17 @@ namespace Library
         }
         private string GetBookState(int bState)
         {
-            if(bState == 0)
+            if (bState == 0)
             {
-                return "外借中";
+                return "已丢失";
+            }
+            else if (bState == 1) 
+            {
+                return "在架上";
             }
             else
             {
-                return "在架上";
+                return "外借中";
             }
         }
         private string GetBookLocation(int bksId)
@@ -110,7 +127,7 @@ namespace Library
                 string bstate = GetBookState(int.Parse(dr["bState"].ToString()));
                 item.SubItems.Add(bstate); //状态 需要从编号转换成字符串
                 string location = GetBookLocation(int.Parse(dr["bksId"].ToString()));
-                item.SubItems.Add(location)  ;//图书位置 需要从编号转换成字符串
+                item.SubItems.Add(location);//图书位置 需要从编号转换成字符串
                 string date = dr["bInDate"].ToString();
                 string[] getDate = date.Split(' ');
                 date = getDate[0];
@@ -123,7 +140,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select pName from publisher where pubId ={0} ",pubid);
+            String sql = String.Format("select pName from publisher where pubId ={0} ", pubid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
@@ -186,11 +203,11 @@ namespace Library
                 //here to display
             }
         }
-        private void LoadUserBookInfo(string userid,int type) //对用form1的历史已借 type=1说明显示的是在借的，type=0说明显示的是已还的，type=2说明是过期的
+        private void LoadUserBookInfo(string userid, int type) //对用form1的历史已借 type=1说明显示的是在借的，type=0说明显示的是已还的，type=2说明是过期的
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(`end`)-TO_DAYS(`start`) bHasBor,borrowed.Expired\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}';", userid);
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}'and borrowed.Expired <> 0;", userid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
@@ -213,10 +230,27 @@ namespace Library
                     item.SubItems.Add("逾期未还");
                 else if (dr["Expired"].ToString() == "0") //未过期
                     item.SubItems.Add("借阅中"); //这个还得设置已归还和在借状态
-                else if (dr["Expired"].ToString() == "-1") //已归还
+                else if (dr["Expired"].ToString() == "2") //已归还
                     item.SubItems.Add("已归还");
+                else if (dr["Expired"].ToString() == "3")
+                    item.SubItems.Add("已丢失且欠费");
+                else item.SubItems.Add("已丢失");
                 this.listView1.Items.Add(item);
                 //here to display 这里考虑的是历史已借，不能显示正在借的。
+            }
+        }
+        private void LoadPriorityToUserState()
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;uid=root;pwd=123456;");
+            conn.Open();
+            string sql = string.Format("select pname from priority;");
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();
+            foreach (DataRow dr in db.Rows)
+            {
+                this.textBox4.Items.Add(dr["pName"].ToString());
             }
         }
         public void LoadUserInfo(ListView curview) //对应curview的读者信息
@@ -224,7 +258,7 @@ namespace Library
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
             String sql = "select * from reader;";
-            MySqlDataAdapter adapter = new MySqlDataAdapter(sql,conn);
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
             conn.Close();//查询到数据之后就可以关掉了
@@ -236,22 +270,28 @@ namespace Library
                 string priority = GetPriorityName(int.Parse(dr["pId"].ToString()));
                 item.SubItems.Add(priority);
                 item.SubItems.Add(dr["uRegistry"].ToString());
-                string status = getStatusName(dr["uState"].ToString());
+                string status = getUserStatusName(dr["uState"].ToString());
                 item.SubItems.Add(status);
                 item.SubItems.Add(dr["uViolatedTimes"].ToString());
                 item.SubItems.Add(dr["uContact"].ToString());
-                item.SubItems.Add(dr["uSex"].ToString());
-                item.SubItems.Add(dr["uValiDate"].ToString());
+
+                string sexstr;
+                if (dr["uSex"].ToString().Equals("0"))
+                    sexstr = "男";
+                else sexstr = "女";
+                item.SubItems.Add(sexstr);
+                item.SubItems.Add(dr["uValiDate"].ToString().Split()[0]);
                 item.SubItems.Add(dr["uCurbor"].ToString());
                 item.SubItems.Add(dr["uHasBor"].ToString());
                 item.SubItems.Add(dr["remark"].ToString());
+                item.SubItems.Add(dr["curViolate"].ToString());
                 curview.Items.Add(item);
                 //here to display
             }
         }
         public void SetAdminLabel(String admName) //设置登录界面跳转过来的管理员名字
         {
-            this.Admin_Name_Label.Text=  admName;
+            this.Admin_Name_Label.Text = admName;
         }
 
         private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
@@ -346,17 +386,22 @@ namespace Library
 
         private void button2_Click(object sender, EventArgs e)
         {
+            ClearUserInfo();
+            LoadUserInfo(this.Readers_Info_Data);
+        }
+        private void ClearUserInfo()
+        {
             this.textBox1.Clear();
             this.textBox2.Clear();
             this.textBox3.Clear();
             this.textBox5.Clear();
             this.textBox6.Clear();
-            this.textBox7.Text="";
-            this.textBox4.Text="";
-            this.label9.Text = "";
-
+            this.textBox8.Clear();
+            this.textBox7.Text = "";
+            this.textBox4.Text = "";
+            this.label9.Text = "读者编号";
         }
-       private void LoadBorrwoedBook(int userid) //SelectionForm3的图书罚款
+        private void LoadBorrwoedBook(int userid) //SelectionForm3的图书罚款
         {
             //MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             //conn.Open();
@@ -389,29 +434,51 @@ namespace Library
         private void SelectionForm_Load(object sender, EventArgs e)
         {
             LoadUserInfo(this.Readers_Info_Data); // 一开始Load的时候应该是form1的ListView
-
+            LoadPriorityToUserState();
         }
 
         private void Readers_Info_Data_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.label9.Visible = true;
+            this.textBox9.Visible = false;
             if (this.Readers_Info_Data.SelectedItems.Count > 0)
             {
                 ListViewItem item = this.Readers_Info_Data.SelectedItems[0];//获取选中的第一行（一次只能选中一行）
+                if (!item.SubItems[4].Text.Equals("有效"))
+                {
+                    foreach (TextBoxBase c in this.Readers_Info_Table.Controls.OfType<TextBoxBase>())
+                    {
+                        c.ReadOnly = true;
+                    }
+                    this.textBox4.DropDownStyle = ComboBoxStyle.DropDownList;
 
-                this.textBox4.Text = item.SubItems[2].Text; //读者类别
-                this.textBox1.Text = item.SubItems[1].Text;//读者姓名
-                this.textBox7.Text = item.SubItems[4].Text;//状态
-                this.textBox2.Text = item.SubItems[5].Text;//违规次数
-                this.textBox6.Text = item.SubItems[8].Text;//有效期
-                this.textBox5.Text = item.SubItems[3].Text;//注册日期
-                this.textBox3.Text = item.SubItems[6].Text;//联系方式
-                this.label9.Text = item.SubItems[0].Text;
-                LoadUserBookInfo(this.label9.Text,0);
+                }
+                else
+                {
+                    this.textBox5.ReadOnly = false;
+                    this.textBox4.DropDownStyle = ComboBoxStyle.DropDown;
+                    this.textBox1.ReadOnly = false;
+                    this.textBox3.ReadOnly = false;
+                }
+                this.textBox5.Text = item.SubItems[7].Text;//性别 可改
+                this.textBox4.Text = item.SubItems[2].Text; //读者类别 可改
+                this.textBox1.Text = item.SubItems[1].Text;//读者姓名 可改
+                this.textBox7.Text = item.SubItems[4].Text;//状态 只读
+                this.textBox2.Text = item.SubItems[5].Text;//违规次数 只读
+                this.textBox6.Text = item.SubItems[8].Text;//有效期 只读
+                this.textBox3.Text = item.SubItems[6].Text;//联系方式 可改
+                this.label9.Text = item.SubItems[0].Text;//读者编号 只读
+                this.textBox8.Text = item.SubItems[12].Text;//罚款金额 只读 }
+
+                LoadUserBookInfo(this.label9.Text, 0);
+
             }
         }
 
         private void label9_Click(object sender, EventArgs e)
         {
+            this.label9.Visible = false;
+            this.textBox9.Visible = true;
 
         }
 
@@ -420,30 +487,54 @@ namespace Library
 
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void button1_Click_1(object sender, EventArgs e) //保存修改
         {
-            String uViolatedTimes = this.textBox2.Text;
-            String uvalidate = this.textBox6.Text;
-            if(uViolatedTimes.Length > 0 && uvalidate.Length > 0)
+            this.label9.Visible = true;
+            this.textBox9.Visible = false;
+            if (this.textBox7.Text.Equals("有效"))
             {
-                MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
-                conn.Open();
-                String sql = String.Format("update reader set uViolatedTimes={0},uValiDate='{1}' where uID ='{2}';",uViolatedTimes,uvalidate,this.label9.Text);
-                MySqlCommand command = new MySqlCommand(sql, conn);
-                int rows = command.ExecuteNonQuery();
-                if(rows> 0)
+                String uName = this.textBox1.Text; //用户名字可改 varchar
+                String uSex = this.textBox5.Text; //用户性别可改 int
+                int sexid;
+                if (uSex.Contains('男'))
+                    sexid = 0;
+                else sexid = 1;
+                String uPriority = this.textBox4.Text;//用户类别可改 int
+                int uPid = GetPriorityId(uPriority);
+                String uContact = this.textBox3.Text;//用户联系方式可改 varchar
+                String uid = this.label9.Text;
+                if (uName.Length > 0 && uContact.Length > 0 && !uid.Equals(""))
                 {
-                    MessageBox.Show("已经成功修改！");
-                    LoadUserInfo(this.Readers_Info_Data);
+                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                    conn.Open();
+                    String sql = String.Format("update reader set uName='{0}',uContact='{1}', pId ={2},uSex={3} where uID ='{4}';", uName, uContact, uPid, sexid, uid);
+                    MySqlCommand command = new MySqlCommand(sql, conn);
+                    int rows = command.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        MessageBox.Show("已经成功修改！");
+                        LoadUserInfo(this.Readers_Info_Data);
+                    }
+                    else
+                    {
+                        MessageBox.Show("修改失败，请检查输入是否符合规范！");
+                    }
+                    conn.Close();//查询到数据之后就可以关掉了
+
                 }
-                conn.Close();//查询到数据之后就可以关掉了
+                else
+                {
+                    MessageBox.Show("输入为空，请重新输入！");
+                }
             }
             else
             {
-                MessageBox.Show("输入为空，请重新输入！");
+                MessageBox.Show("用户状态无效，无法修改保存！");
             }
 
+
         }
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -453,6 +544,211 @@ namespace Library
         private void listView2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private bool check_uid(string uid)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select * from reader where uID = '{0}';", uid);
+            MySqlCommand command = new MySqlCommand(sql, conn);
+            int rows = command.ExecuteNonQuery();
+            conn.Close();
+            if (rows > 0)
+                return false;
+            else return true;
+
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            String uid = this.textBox9.Text;
+            if (!check_uid(uid))
+            {
+                String uName = this.textBox1.Text;
+                String uSex = this.textBox5.Text;
+                int sexid;
+                if (uSex.Contains('男'))
+                    sexid = 0;
+                else sexid = 1;
+                int priorityIndex = this.textBox4.SelectedIndex;
+                int pid = priorityIndex + 1;
+                String uContact = this.textBox3.Text;
+                conn.Open();
+                try
+                {
+                    String sql = String.Format("insert into reader values('{0}',{1},'{2}',CURRENT_DATE,1,0,'{3}',{4},DATE_ADD(CURRENT_DATE, INTERVAL 1 YEAR),0,0,NULL,0); ", uid, pid, uName, uContact, sexid);
+                    MySqlCommand command = new MySqlCommand(sql, conn);
+                    int rows = command.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        MessageBox.Show("用户信息添加成功！");
+                        LoadUserInfo(this.Readers_Info_Data);
+                    }
+                    else
+                    {
+                        MessageBox.Show("用户信息添加失败，请检查输入是否符合标准。");
+                        ClearUserInfo();
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("用户信息添加失败，请检查输入是否符合标准。");
+                    ClearUserInfo();
+                }
+            }
+            else { MessageBox.Show("读者编号已存在！"); }
+
+            this.label9.Visible = true;
+            this.textBox9.Visible = false;
+
+        }
+
+        private void textBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox9_VisibleChanged(object sender, EventArgs e)
+        {
+            this.textBox9.ReadOnly = false;
+            this.textBox5.ReadOnly = false;
+            this.textBox4.DropDownStyle = ComboBoxStyle.DropDown;
+            this.textBox1.ReadOnly = false;
+            this.textBox3.ReadOnly = false;
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.label9.Visible = true;
+            this.textBox9.Visible = false;
+            if (this.textBox7.Text.Contains("无效"))
+            {
+                MessageBox.Show("该用户已处于无效状态！");
+            }
+            else
+            {
+                if (this.label9.Text.Length > 0)
+                {
+                    
+                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
+                    String sql = String.Format("set @tmp = 10;call cancel_user('{0}',@tmp);select @tmp as tmp_out;", this.label9.Text);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows[0]["tmp_out"].ToString().Equals("0") || dt.Rows[0]["tmp_out"].ToString().Equals("-1")) //成功设置
+                    {
+                        MessageBox.Show("该用户成功注销！");
+                    }
+                    else
+                    {
+                        MessageBox.Show("该用户无法注销！");
+                    }
+                    LoadUserInfo(this.Readers_Info_Data);
+
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.label9.Visible = true;
+            this.textBox9.Visible = false;
+            if (this.textBox7.Text.Equals("有效"))
+            {
+                MessageBox.Show("该用户状态为有效，无需更新！");
+            }
+            else
+            {
+                if (this.label9.Text.Length == 0)
+                    MessageBox.Show("用户编号不能为零！");
+                else
+                {
+                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                    conn.Open();
+                    String sql = String.Format("call change_uState('{0}',1)", this.label9.Text);
+                    MySqlCommand command = new MySqlCommand(sql, conn);
+                    int rows = command.ExecuteNonQuery();
+                    conn.Close();
+                    if (rows > 0)
+                    {
+                        MessageBox.Show("修改成功！");
+                        LoadUserInfo(this.Readers_Info_Data);
+                    }
+                    else
+                    {
+                        MessageBox.Show("修改失败！");
+                    }
+                }
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (this.textBox9.Visible == false || this.textBox9.Text.Length <= 0)
+            {
+                MessageBox.Show("请清空界面并输入读者编号！");
+            }
+            else
+            {
+                String uid = this.textBox9.Text;
+                if (!check_uid(uid)) MessageBox.Show("该用户编号不存在！");
+                else
+                {
+                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                    conn.Open();
+                    string sql = String.Format("select * from reader where uID = '{0}';", uid);
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+                    DataTable db = new DataTable();
+                    adapter.Fill(db);
+                    conn.Close();//查询到数据之后就可以关掉了
+                    this.Readers_Info_Data.Items.Clear();//先将列表视图中现有行清空
+                    foreach (DataRow dr in db.Rows)
+                    {
+                        ListViewItem item = new ListViewItem(dr["uID"].ToString());
+                        item.SubItems.Add(dr["uName"].ToString());
+                        string priority = GetPriorityName(int.Parse(dr["pId"].ToString()));
+                        item.SubItems.Add(priority);
+                        item.SubItems.Add(dr["uRegistry"].ToString());
+                        string status = getUserStatusName(dr["uState"].ToString());
+                        item.SubItems.Add(status);
+                        item.SubItems.Add(dr["uViolatedTimes"].ToString());
+                        item.SubItems.Add(dr["uContact"].ToString());
+
+                        string sexstr;
+                        if (dr["uSex"].ToString().Equals("0"))
+                            sexstr = "男";
+                        else sexstr = "女";
+                        item.SubItems.Add(sexstr);
+                        item.SubItems.Add(dr["uValiDate"].ToString().Split()[0]);
+                        item.SubItems.Add(dr["uCurbor"].ToString());
+                        item.SubItems.Add(dr["uHasBor"].ToString());
+                        item.SubItems.Add(dr["remark"].ToString());
+                        item.SubItems.Add(dr["curViolate"].ToString());
+                        Readers_Info_Data.Items.Add(item);
+                        //here to display
+                    }
+                }
+
+            }
         }
     }
 }
