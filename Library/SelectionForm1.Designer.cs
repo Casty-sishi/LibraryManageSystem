@@ -74,6 +74,12 @@
             this.bReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bHasBor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ifReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.bkindex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ifFined = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
             this.Admin_Name_Label = new System.Windows.Forms.Label();
@@ -81,22 +87,17 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.OnePanel = new System.Windows.Forms.Panel();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bkindex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ifFined = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.eventId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.FinedMoney = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.eid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Reader_Tab_Control.SuspendLayout();
             this.Reader_Info_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.Readers_Info_List.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.Admin_Info_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).BeginInit();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // Reader_Tab_Control
@@ -488,6 +489,56 @@
             // 
             this.ifReturn.Text = "借阅状态";
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.listView2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(537, 373);
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "违规记录";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listView2
+            // 
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.index,
+            this.time,
+            this.bkindex,
+            this.ifFined,
+            this.FinedMoney,
+            this.eid});
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(6, 6);
+            this.listView2.MultiSelect = false;
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(525, 361);
+            this.listView2.TabIndex = 2;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            // 
+            // index
+            // 
+            this.index.Text = "序号";
+            // 
+            // time
+            // 
+            this.time.Text = "时间";
+            // 
+            // bkindex
+            // 
+            this.bkindex.Text = "图书编号";
+            this.bkindex.Width = 83;
+            // 
+            // ifFined
+            // 
+            this.ifFined.Text = "罚款状态";
+            this.ifFined.Width = 112;
+            // 
             // Admin_Info_Box
             // 
             this.Admin_Info_Box.Controls.Add(this.Borrow_Return_Mangager_Button);
@@ -566,59 +617,13 @@
             this.OnePanel.Size = new System.Drawing.Size(545, 406);
             this.OnePanel.TabIndex = 6;
             // 
-            // tabPage2
+            // FinedMoney
             // 
-            this.tabPage2.Controls.Add(this.listView2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(537, 373);
-            this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "违规记录";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.FinedMoney.Text = "罚款金额";
             // 
-            // listView2
+            // eid
             // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.index,
-            this.time,
-            this.bkindex,
-            this.ifFined,
-            this.eventId});
-            this.listView2.FullRowSelect = true;
-            this.listView2.GridLines = true;
-            this.listView2.HideSelection = false;
-            this.listView2.Location = new System.Drawing.Point(6, 6);
-            this.listView2.MultiSelect = false;
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(525, 361);
-            this.listView2.TabIndex = 2;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
-            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
-            // 
-            // index
-            // 
-            this.index.Text = "序号";
-            // 
-            // time
-            // 
-            this.time.Text = "时间";
-            // 
-            // bkindex
-            // 
-            this.bkindex.Text = "图书编号";
-            this.bkindex.Width = 83;
-            // 
-            // ifFined
-            // 
-            this.ifFined.Text = "罚款状态";
-            this.ifFined.Width = 112;
-            // 
-            // eventId
-            // 
-            this.eventId.Text = "违规事件";
-            this.eventId.Width = 100;
+            this.eid.Text = "违规事件";
             // 
             // SelectionForm
             // 
@@ -638,10 +643,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.Readers_Info_List.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.Admin_Info_Box.ResumeLayout(false);
             this.Admin_Info_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Admin_Picture_Box)).EndInit();
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -705,6 +710,7 @@
         private System.Windows.Forms.ColumnHeader time;
         private System.Windows.Forms.ColumnHeader bkindex;
         private System.Windows.Forms.ColumnHeader ifFined;
-        private System.Windows.Forms.ColumnHeader eventId;
+        private System.Windows.Forms.ColumnHeader FinedMoney;
+        private System.Windows.Forms.ColumnHeader eid;
     }
 }
