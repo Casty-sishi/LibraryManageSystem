@@ -69,7 +69,7 @@
             this.bPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bIntro = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.textBox13 = new System.Windows.Forms.TextBox();
@@ -90,7 +90,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Publisher_TabPage = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -124,6 +123,8 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.TwoPanel = new System.Windows.Forms.Panel();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox15 = new System.Windows.Forms.TextBox();
             this.Book_Tab_Control.SuspendLayout();
             this.Library_Book_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
@@ -167,6 +168,7 @@
             // 
             // Readers_Info_Table
             // 
+            this.Readers_Info_Table.Controls.Add(this.textBox15);
             this.Readers_Info_Table.Controls.Add(this.button10);
             this.Readers_Info_Table.Controls.Add(this.button9);
             this.Readers_Info_Table.Controls.Add(this.button6);
@@ -285,6 +287,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(192, 18);
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(100, 25);
             this.textBox1.TabIndex = 2;
             // 
@@ -324,13 +327,14 @@
             this.label1.Size = new System.Drawing.Size(39, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "Isbn";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(8, 24);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 108);
+            this.pictureBox1.Size = new System.Drawing.Size(100, 99);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -492,8 +496,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox14);
+            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button8);
             this.groupBox2.Controls.Add(this.textBox13);
@@ -522,12 +526,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "详细信息";
             // 
-            // textBox14
+            // label8
             // 
-            this.textBox14.Location = new System.Drawing.Point(152, 15);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(102, 25);
-            this.textBox14.TabIndex = 22;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(43, 143);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 15);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Isbn";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // button11
             // 
@@ -551,7 +558,7 @@
             // 
             // textBox13
             // 
-            this.textBox13.Location = new System.Drawing.Point(47, 125);
+            this.textBox13.Location = new System.Drawing.Point(187, 15);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(60, 25);
             this.textBox13.TabIndex = 19;
@@ -559,7 +566,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(0, 128);
+            this.label21.Location = new System.Drawing.Point(113, 21);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(52, 15);
             this.label21.TabIndex = 18;
@@ -701,21 +708,12 @@
             this.label9.TabIndex = 3;
             this.label9.Text = "图书名称：";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(183, 18);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 15);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Isbn";
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(7, 24);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(100, 90);
+            this.pictureBox2.Size = new System.Drawing.Size(100, 113);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
@@ -1017,6 +1015,22 @@
             this.TwoPanel.Size = new System.Drawing.Size(544, 401);
             this.TwoPanel.TabIndex = 6;
             // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(7, 143);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(100, 25);
+            this.textBox14.TabIndex = 22;
+            this.textBox14.Visible = false;
+            // 
+            // textBox15
+            // 
+            this.textBox15.Location = new System.Drawing.Point(17, 129);
+            this.textBox15.Name = "textBox15";
+            this.textBox15.Size = new System.Drawing.Size(82, 25);
+            this.textBox15.TabIndex = 16;
+            this.textBox15.Visible = false;
+            // 
             // SelectionForm2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1144,8 +1158,9 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox textBox14;
+        public System.Windows.Forms.TextBox textBox15;
     }
 }
