@@ -348,9 +348,67 @@ namespace Library
             LoadPubilsherInfo();
             LoadBookInfo();
             LoadBookInLibrary(bookform.listView3);
+            bookform.LoadTypeCombox();
+            bookform.LoadPublisherCombox();
             bookform.Show();
         }
 
+        private void LoadBookOnShelf()
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+            conn.Open();
+            String sql = String.Format("select bIsbn,bName,bId,bState,bksId,bInDate from books natural join bookinfo where books.bState = 1;");
+            MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            adapter.Fill(db);
+            conn.Close();//查询到数据之后就可以关掉了
+            borrowreturnform.listView9.Items.Clear();//先将列表视图中现有行清空
+            foreach (DataRow dr in db.Rows)
+            {
+                ListViewItem item = new ListViewItem(dr["bIsbn"].ToString());
+                item.SubItems.Add(dr["bId"].ToString());
+                item.SubItems.Add(dr["bName"].ToString());
+                string bstate = GetBookState(int.Parse(dr["bState"].ToString()));
+                item.SubItems.Add(bstate); //状态 需要从编号转换成字符串
+                string location = GetBookLocation(int.Parse(dr["bksId"].ToString()));
+                item.SubItems.Add(location);//图书位置 需要从编号转换成字符串
+                string date = dr["bInDate"].ToString();
+                string[] getDate = date.Split(' ');
+                date = getDate[0];
+                item.SubItems.Add(date);
+                borrowreturnform.listView9.Items.Add(item);
+                //here to display
+            }
+        }
+        private void LoadBorrowedBooks()
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
+            conn.Open();
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
+            MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            da.Fill(db);
+            conn.Close();
+            borrowreturnform.listView4.Items.Clear();
+            foreach (DataRow dr in db.Rows)
+            {
+                ListViewItem item = new ListViewItem(dr["bId"].ToString());
+                item.SubItems.Add(dr["bName"].ToString());
+                //string bstate = GetBookState(int.Parse(dr["start"].ToString()));
+                item.SubItems.Add(dr["start"].ToString().Split(' ')[0]); //状态 需要从编号转换成字符串
+                item.SubItems.Add(dr["end"].ToString().Split(' ')[0]);
+                //string location = GetBookLocation(int.Parse(dr["bksId"].ToString()));
+                item.SubItems.Add(dr["bksName"].ToString());//图书位置 需要从编号转换成字符串
+                //string date = dr["b"].ToString();
+                //string[] getDate = date.Split(' ');
+                //date = getDate[0];
+                item.SubItems.Add(dr["bHasBor"].ToString());
+                item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
+                borrowreturnform.listView4.Items.Add(item);
+                //here to display
+            }
+
+        }
         private void Borrow_Return_Mangager_Button_Click(object sender, EventArgs e) //跳转至借还管理
         {
             this.Reader_Tab_Control.Controls.Clear();
@@ -360,7 +418,8 @@ namespace Library
             LoadUserInfo(borrowreturnform.Readers_Info_Data);
             LoadUserInfo(borrowreturnform.listView7);
             LoadUserInfo(borrowreturnform.listView8);
-            LoadBookInLibrary(borrowreturnform.listView9);
+            LoadBookOnShelf();
+            LoadBorrowedBooks();
             borrowreturnform.Show();
         }
 
