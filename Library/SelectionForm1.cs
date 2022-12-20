@@ -384,7 +384,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
             MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             da.Fill(db);
@@ -404,8 +404,45 @@ namespace Library
                 //date = getDate[0];
                 item.SubItems.Add(dr["bHasBor"].ToString());
                 item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
+                item.SubItems.Add(dr["id"].ToString());
                 borrowreturnform.listView4.Items.Add(item);
                 //here to display
+            }
+
+        }
+
+        private void LoadViolateInfo()//展示所有人的违规记录
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
+            conn.Open();
+            String sql = String.Format("select violateinfo.`index`,time,violateinfo.uid,bkid,bookinfo.bName,bookinfo.bPrice,ifFined,finedMoney,violateevent.vName,violateinfo.borrowedid\r\nfrom violateinfo\r\njoin violateevent on violateinfo.violateid = violateevent.vid\r\njoin books on violateinfo.bkid = books.bId\r\njoin bookinfo on books.bIsbn = bookinfo.bIsbn;");
+            MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            da.Fill(db);
+            conn.Close();
+            borrowreturnform.listView1.Items.Clear();
+            foreach (DataRow dr in db.Rows)
+            {
+                ListViewItem item = new ListViewItem(dr["index"].ToString());
+                item.SubItems.Add(dr["time"].ToString().Split(' ')[0]);
+                item.SubItems.Add(dr["uid"].ToString());
+                item.SubItems.Add(dr["bkid"].ToString());
+                //string returnDate = dr["end"].ToString().Split(' ')[0];
+                //item.SubItems.Add(returnDate);//归还日期
+                item.SubItems.Add(dr["bName"].ToString());
+                item.SubItems.Add(dr["bPrice"].ToString());
+                item.SubItems.Add(dr["vName"].ToString());
+                item.SubItems.Add(dr["finedMoney"].ToString());
+                int iffined = int.Parse(dr["ifFined"].ToString());
+                string finedstate;
+                if (iffined == 1)
+                {
+                    finedstate = "已缴清罚款";
+                }
+                else finedstate = "未缴清罚款";
+                item.SubItems.Add(finedstate);
+                item.SubItems.Add(dr["borrowedid"].ToString());
+                borrowreturnform.listView1.Items.Add(item);
             }
 
         }
@@ -420,6 +457,7 @@ namespace Library
             LoadUserInfo(borrowreturnform.listView8);
             LoadBookOnShelf();
             LoadBorrowedBooks();
+            LoadViolateInfo();
             borrowreturnform.Show();
         }
 
