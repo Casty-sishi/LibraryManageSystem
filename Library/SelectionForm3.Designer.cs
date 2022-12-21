@@ -61,6 +61,7 @@
             this.uHasBor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.remark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Book_TabPage = new System.Windows.Forms.TabPage();
+            this.button12 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -85,8 +86,9 @@
             this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button12 = new System.Windows.Forms.Button();
             this.listView7 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -426,6 +428,7 @@
             // 
             // Book_TabPage
             // 
+            this.Book_TabPage.Controls.Add(this.textBox4);
             this.Book_TabPage.Controls.Add(this.button12);
             this.Book_TabPage.Controls.Add(this.label10);
             this.Book_TabPage.Controls.Add(this.textBox8);
@@ -438,7 +441,6 @@
             this.Book_TabPage.Controls.Add(this.button1);
             this.Book_TabPage.Controls.Add(this.label3);
             this.Book_TabPage.Controls.Add(this.label4);
-            this.Book_TabPage.Controls.Add(this.textBox4);
             this.Book_TabPage.Controls.Add(this.groupBox3);
             this.Book_TabPage.Controls.Add(this.groupBox4);
             this.Book_TabPage.Location = new System.Drawing.Point(4, 25);
@@ -448,6 +450,16 @@
             this.Book_TabPage.TabIndex = 0;
             this.Book_TabPage.Text = "图书归还";
             this.Book_TabPage.UseVisualStyleBackColor = true;
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(341, 145);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(89, 32);
+            this.button12.TabIndex = 15;
+            this.button12.Text = "查询读者";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // label10
             // 
@@ -599,7 +611,9 @@
             this.columnHeader34,
             this.columnHeader35,
             this.columnHeader36,
-            this.columnHeader38});
+            this.columnHeader38,
+            this.columnHeader40,
+            this.columnHeader41});
             this.listView4.FullRowSelect = true;
             this.listView4.GridLines = true;
             this.listView4.HideSelection = false;
@@ -650,6 +664,14 @@
             // 
             this.columnHeader38.Text = "序号";
             // 
+            // columnHeader40
+            // 
+            this.columnHeader40.Text = "借阅次数";
+            // 
+            // columnHeader41
+            // 
+            this.columnHeader41.Text = "读者编号";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.listView7);
@@ -660,16 +682,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "读者";
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(341, 145);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(89, 32);
-            this.button12.TabIndex = 15;
-            this.button12.Text = "查询读者";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // listView7
             // 
@@ -1282,5 +1294,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ColumnHeader columnHeader39;
+        private System.Windows.Forms.ColumnHeader columnHeader40;
+        private System.Windows.Forms.ColumnHeader columnHeader41;
     }
 }

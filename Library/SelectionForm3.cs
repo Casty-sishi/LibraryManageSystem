@@ -83,7 +83,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id,borrowed.reTimes,borrowed.Rea_uID \r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
             MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             da.Fill(db);
@@ -104,6 +104,8 @@ namespace Library
                 item.SubItems.Add(dr["bHasBor"].ToString());
                 item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
                 item.SubItems.Add(dr["id"].ToString());
+                item.SubItems.Add(dr["reTimes"].ToString());
+                item.SubItems.Add(dr["Rea_uID"].ToString());
                 this.listView4.Items.Add(item);
                 //here to display
             }
@@ -113,7 +115,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0 and borrowed.Rea_uID = '{0}'",uid);
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id,borrowed.reTimes,borrowed.Rea_uID \r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0 and borrowed.Rea_uID = '{0}'", uid);
             MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             da.Fill(db);
@@ -134,6 +136,8 @@ namespace Library
                 item.SubItems.Add(dr["bHasBor"].ToString());
                 item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
                 item.SubItems.Add(dr["id"].ToString());
+                item.SubItems.Add(dr["reTimes"].ToString());
+                item.SubItems.Add(dr["Rea_uID"].ToString());
                 this.listView4.Items.Add(item);
                 //here to display
             }
@@ -141,6 +145,11 @@ namespace Library
         }
         private void listView7_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.textBox4.Clear();
+            this.textBox3.Clear();
+            this.textBox7.Clear();
+            this.textBox8.Clear();
+            this.label10.Text = "序号";
             if (this.listView7.SelectedItems.Count > 0)
             {
                 ListViewItem item = this.listView7.SelectedItems[0];//获取选中的第一行（一次只能选中一行）
@@ -253,7 +262,7 @@ namespace Library
             }
             else if (!ifUserVali(uid)) //续借需要进行用户账户状态的检查
             {
-                MessageBox.Show("该用户状态处于无效状态，无法续借！");
+                MessageBox.Show("该用户状态处于无效状态，无法借阅！");
                 ClearSelected();
                 this.textBox1.Clear();
                 this.textBox2.Clear();
@@ -269,13 +278,14 @@ namespace Library
                     DataTable db = new DataTable();
                     da.Fill(db);
                     int days = int.Parse(db.Rows[0]["m"].ToString());
-                    sql = String.Format("call borrow_books('{0}', {1},{2},0);", uid, bkid, days);
+                    sql = String.Format("call borrow_books('{0}',{1},{2});", uid, bkid, days);
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     int row = cmd.ExecuteNonQuery();
                     conn.Close();
                     MessageBox.Show("借阅成功！");
                     LoadBookOnShelf();
                     LoadBorrowedBooks();
+                    LoadUserInfo(this.Readers_Info_Data);
                 } catch { MessageBox.Show("借阅失败！"); }
 
             }
@@ -612,8 +622,9 @@ namespace Library
             string uid = this.textBox4.Text.Trim();
             string startdate = this.textBox7.Text.Trim();
             string enddate = this.textBox8.Text.Trim();
+            string index = this.label10.Text.Trim();
             //todo
-            if (bkid.Length <= 0 || uid.Length <= 0 || check_uid(uid) || check_bid(int.Parse(bkid)) || startdate.Length<=0)
+            if (bkid.Length <= 0 || uid.Length <= 0 || check_uid(uid) || check_bid(int.Parse(bkid)) || startdate.Length<=0 || index.Length==0)
             {
                 MessageBox.Show("请选中对应记录！");
             }
@@ -634,7 +645,7 @@ namespace Library
                 {
                     MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
                     conn.Open();
-                    String sql = String.Format("set @s = -2;\r\ncall return_books({0},'{1}','{2}','{3}',0,@s); #还书测试\r\nselect @s `out`;", int.Parse(bkid), uid, end, start);
+                    String sql = String.Format("set @s = -2;\r\ncall return_books({0},'{1}',{2},0,@s); #还书测试\r\nselect @s `out`;", int.Parse(bkid), uid, int.Parse(index));
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     DataTable db = new DataTable();
                     da.Fill(db);
@@ -648,6 +659,7 @@ namespace Library
                         this.textBox3.Clear();
                         this.textBox7.Clear();
                         this.textBox8.Clear();
+                        this.label10.Text = "序号";
                         LoadBorrowedBooks();
                         LoadBookOnShelf();
                     }
@@ -693,8 +705,9 @@ namespace Library
             string uid = this.textBox4.Text.Trim();
             string startdate = this.textBox7.Text.Trim();
             string enddate = this.textBox8.Text.Trim();
+            string index = this.label10.Text.Trim();
             //todo
-            if (bkid.Length <= 0 || uid.Length <= 0 || check_uid(uid) || check_bid(int.Parse(bkid)) || startdate.Length <= 0)
+            if (bkid.Length <= 0 || uid.Length <= 0 || check_uid(uid) || check_bid(int.Parse(bkid)) || startdate.Length <= 0 || index.Length==0)
             {
                 MessageBox.Show("请选中对应记录！");
             }
@@ -706,6 +719,7 @@ namespace Library
                 this.textBox3.Clear();
                 this.textBox7.Clear();
                 this.textBox8.Clear();
+                this.label10.Text = "序号";
                 LoadBorrowedBooks();
             }
             else
@@ -721,7 +735,7 @@ namespace Library
                 {
                     MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
                     conn.Open();
-                    String sql = String.Format("set @s = -2;\r\ncall return_books({0},'{1}','{2}','{3}',1,@s); #还书测试\r\nselect @s `out`;", int.Parse(bkid), uid, end, start);
+                    String sql = String.Format("set @s = -2;\r\ncall return_books({0},'{1}',{2},1,@s); \r\nselect @s `out`;", int.Parse(bkid), uid, int.Parse(this.label10.Text.ToString()));
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     DataTable db = new DataTable();
                     da.Fill(db);
@@ -790,6 +804,7 @@ namespace Library
                 this.textBox7.Text = item.SubItems[2].Text;
                 this.textBox8.Text = item.SubItems[3].Text;
                 this.label10.Text = item.SubItems[7].Text;
+                this.textBox4.Text= item.SubItems[9].Text;
             }
         }
 

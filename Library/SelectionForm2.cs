@@ -380,10 +380,14 @@ namespace Library
                         LoadBookInLibrary();
                     }
                 }
+                else
+                {
+                    MessageBox.Show("该图书不能删除！");
+                }
             }
             else
             {
-                MessageBox.Show("该图书不能删除！");
+                MessageBox.Show("请选中图书！");
             }
                 
         }
@@ -464,6 +468,9 @@ namespace Library
                     {
                         MessageBox.Show("已成功保存！");
                         LoadBookInfo();
+                        LoadPubilsherInfo();
+                        LoadPublisherCombox();
+                        LoadTypeCombox();
                     }
                     else
                     {
@@ -509,6 +516,9 @@ namespace Library
                     {
                         MessageBox.Show("已成功添加！");
                         LoadBookInfo();
+                        LoadPubilsherInfo();
+                        LoadPublisherCombox();
+                        LoadTypeCombox();
                     }
                     else
                     {
@@ -593,6 +603,7 @@ namespace Library
             {
                 MessageBox.Show("删除成功！");
                 LoadPubilsherInfo();
+                LoadPublisherCombox();
             }
             else
             {
@@ -610,7 +621,20 @@ namespace Library
                 MessageBox.Show(tmp,"删除失败!");
             }
         }
+        private bool ifHasPublisher(string name)
+        {
+            MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
+            conn.Open();
+            String sql = String.Format("select count(*) m from publisher where publisher.pName = '{0}'",name);
+            MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+            DataTable db = new DataTable();
+            da.Fill(db);
+            conn.Close();
+            if (int.Parse(db.Rows[0]["m"].ToString()) > 0)
+                return true;
+            else return false;
 
+        }
         private void button7_Click(object sender, EventArgs e)//添加出版社信息
         {
             if (this.textBox9.Text.Length > 0 && this.textBox10.Text.Length > 0 && this.textBox11.Text.Length > 0 && this.textBox12.Text.Length > 0)
@@ -619,20 +643,26 @@ namespace Library
                 string locate = this.textBox10.Text.Trim();
                 string mail = this.textBox11.Text.Trim();
                 string contact = this.textBox12.Text.Trim();
-                MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
-                conn.Open();
-                String sql = String.Format("insert into publisher\r\nvalues(NULL,'{0}','{1}','{2}','{3}');", pubName, locate, mail, contact);
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                int rows = cmd.ExecuteNonQuery();
-                if (rows > 0)
-                {
-                    MessageBox.Show("成功添加！");
-                    LoadPubilsherInfo();
-                }
+                if (ifHasPublisher(pubName)) MessageBox.Show("该出版社信息已存在！");
                 else
                 {
-                    MessageBox.Show("系统错误，添加失败！");
+                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                    conn.Open();
+                    String sql = String.Format("insert into publisher\r\nvalues(NULL,'{0}','{1}','{2}','{3}');", pubName, locate, mail, contact);
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    int rows = cmd.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        MessageBox.Show("成功添加！");
+                        LoadPubilsherInfo();
+                        LoadPublisherCombox();
+                    }
+                    else
+                    {
+                        MessageBox.Show("系统错误，添加失败！");
+                    }
                 }
+
             }
             else
             {

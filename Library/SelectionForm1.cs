@@ -207,7 +207,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired\r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}'and borrowed.Expired <> 0;", userid);
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,books.bIsbn,bookshelf.bksName,`end`,books.bksId,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,borrowed.handleTime \r\nfrom books\r\nnatural join borrowed\r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Rea_uID = '{0}'and borrowed.Expired <> 0;", userid);
             MySqlDataAdapter adapter = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             adapter.Fill(db);
@@ -234,7 +234,10 @@ namespace Library
                     item.SubItems.Add("已归还");
                 else if (dr["Expired"].ToString() == "3")
                     item.SubItems.Add("已丢失且欠费");
+                else if (dr["Expired"].ToString() == "5")
+                    item.SubItems.Add("逾期已缴费");
                 else item.SubItems.Add("已丢失");
+                item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
                 this.listView1.Items.Add(item);
                 //here to display 这里考虑的是历史已借，不能显示正在借的。
             }
@@ -384,7 +387,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;allowuservariables=True;");
             conn.Open();
-            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id\r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
+            String sql = String.Format("select borrowed.bId,bookinfo.bName,bookshelf.bksName,`start`,`end`,TO_DAYS(CURRENT_DATE)-TO_DAYS(`start`) bHasBor,borrowed.Expired,handleTime,borrowed.id,borrowed.reTimes,borrowed.Rea_uID \r\nfrom books \r\nnatural join borrowed \r\nnatural join bookshelf\r\nnatural join bookinfo\r\nwhere borrowed.Expired =0;");
             MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
             DataTable db = new DataTable();
             da.Fill(db);
@@ -405,6 +408,8 @@ namespace Library
                 item.SubItems.Add(dr["bHasBor"].ToString());
                 item.SubItems.Add(dr["handleTime"].ToString().Split(' ')[0]);
                 item.SubItems.Add(dr["id"].ToString());
+                item.SubItems.Add(dr["reTimes"].ToString());
+                item.SubItems.Add(dr["Rea_uID"].ToString());
                 borrowreturnform.listView4.Items.Add(item);
                 //here to display
             }
@@ -494,6 +499,7 @@ namespace Library
             this.textBox5.Clear();
             this.textBox6.Clear();
             this.textBox8.Clear();
+            this.textBox9.Clear();
             this.textBox7.Text = "";
             this.textBox4.Text = "";
             this.label9.Text = "读者编号";
@@ -590,39 +596,44 @@ namespace Library
             this.textBox9.Visible = false;
             if (this.textBox7.Text.Equals("有效"))
             {
-                String uName = this.textBox1.Text; //用户名字可改 varchar
-                String uSex = this.textBox5.Text; //用户性别可改 int
-                int sexid;
-                if (uSex.Contains('男'))
-                    sexid = 0;
-                else sexid = 1;
-                String uPriority = this.textBox4.Text;//用户类别可改 int
-                int uPid = GetPriorityId(uPriority);
-                String uContact = this.textBox3.Text;//用户联系方式可改 varchar
-                String uid = this.label9.Text;
-                if (uName.Length > 0 && uContact.Length > 0 && !uid.Equals(""))
+                try
                 {
-                    MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
-                    conn.Open();
-                    String sql = String.Format("update reader set uName='{0}',uContact='{1}', pId ={2},uSex={3} where uID ='{4}';", uName, uContact, uPid, sexid, uid);
-                    MySqlCommand command = new MySqlCommand(sql, conn);
-                    int rows = command.ExecuteNonQuery();
-                    if (rows > 0)
+                    String uName = this.textBox1.Text; //用户名字可改 varchar
+                    String uSex = this.textBox5.Text; //用户性别可改 int
+                    int sexid;
+                    if (uSex.Contains('男'))
+                        sexid = 0;
+                    else sexid = 1;
+                    String uPriority = this.textBox4.Text;//用户类别可改 int
+                    int uPid = GetPriorityId(uPriority);
+                    String uContact = this.textBox3.Text;//用户联系方式可改 varchar
+                    String uid = this.label9.Text;
+                    if (uName.Length > 0 && uContact.Length > 0 && !uid.Equals(""))
                     {
-                        MessageBox.Show("已经成功修改！");
-                        LoadUserInfo(this.Readers_Info_Data);
+                        MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
+                        conn.Open();
+                        String sql = String.Format("update reader set uName='{0}',uContact='{1}', pId ={2},uSex={3} where uID ='{4}';", uName, uContact, uPid, sexid, uid);
+                        MySqlCommand command = new MySqlCommand(sql, conn);
+                        int rows = command.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            MessageBox.Show("已经成功修改！");
+                            LoadUserInfo(this.Readers_Info_Data);
+                        }
+                        else
+                        {
+                            MessageBox.Show("修改失败，请检查输入是否符合规范！");
+                        }
+                        conn.Close();//查询到数据之后就可以关掉了
+
                     }
                     else
                     {
-                        MessageBox.Show("修改失败，请检查输入是否符合规范！");
+                        MessageBox.Show("输入为空，请重新输入！");
                     }
-                    conn.Close();//查询到数据之后就可以关掉了
+                }
+                catch(Exception ex) { MessageBox.Show("系统错误！" + ex); }
 
-                }
-                else
-                {
-                    MessageBox.Show("输入为空，请重新输入！");
-                }
             }
             else
             {
@@ -652,11 +663,12 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             conn.Open();
-            String sql = String.Format("select * from reader where uID = '{0}';", uid);
-            MySqlCommand command = new MySqlCommand(sql, conn);
-            int rows = command.ExecuteNonQuery();
+            String sql = String.Format("select count(*) m from reader where uID = '{0}';", uid);
+            MySqlDataAdapter da = new MySqlDataAdapter(sql,conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
             conn.Close();
-            if (rows > 0)
+            if (int.Parse(dt.Rows[0]["m"].ToString()) > 0)
                 return false;
             else return true;
 
@@ -665,7 +677,7 @@ namespace Library
         {
             MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
             String uid = this.textBox9.Text;
-            if (!check_uid(uid))
+            if (check_uid(uid))
             {
                 String uName = this.textBox1.Text;
                 String uSex = this.textBox5.Text;
@@ -807,7 +819,7 @@ namespace Library
             else
             {
                 String uid = this.textBox9.Text;
-                if (!check_uid(uid)) MessageBox.Show("该用户编号不存在！");
+                if (check_uid(uid)) MessageBox.Show("该用户编号不存在！");
                 else
                 {
                     MySqlConnection conn = new MySqlConnection("server=localhost;database=library_db;UID=root;PWD=123456;");
@@ -846,6 +858,13 @@ namespace Library
                 }
 
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            new LoginForm().Show();
+            this.Hide();
+
         }
     }
 }

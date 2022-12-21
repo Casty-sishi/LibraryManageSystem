@@ -82,6 +82,7 @@
             this.bReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bHasBor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ifReturn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.handletime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Admin_Info_Box = new System.Windows.Forms.GroupBox();
             this.Borrow_Return_Mangager_Button = new System.Windows.Forms.Button();
             this.Admin_Name_Label = new System.Windows.Forms.Label();
@@ -89,6 +90,7 @@
             this.Book_Manager_Button = new System.Windows.Forms.Button();
             this.Reader_Manager_Button = new System.Windows.Forms.Button();
             this.OnePanel = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
             this.Reader_Tab_Control.SuspendLayout();
             this.Reader_Info_TabPage.SuspendLayout();
             this.Readers_Info_Table.SuspendLayout();
@@ -519,7 +521,8 @@
             this.bLocated,
             this.bReturn,
             this.bHasBor,
-            this.ifReturn});
+            this.ifReturn,
+            this.handletime});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
@@ -566,8 +569,13 @@
             // 
             this.ifReturn.Text = "借阅状态";
             // 
+            // handletime
+            // 
+            this.handletime.Text = "操作时间";
+            // 
             // Admin_Info_Box
             // 
+            this.Admin_Info_Box.Controls.Add(this.button7);
             this.Admin_Info_Box.Controls.Add(this.Borrow_Return_Mangager_Button);
             this.Admin_Info_Box.Controls.Add(this.Admin_Name_Label);
             this.Admin_Info_Box.Controls.Add(this.Admin_Picture_Box);
@@ -596,7 +604,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Admin_Name_Label.AutoSize = true;
-            this.Admin_Name_Label.Location = new System.Drawing.Point(73, 188);
+            this.Admin_Name_Label.Location = new System.Drawing.Point(94, 187);
             this.Admin_Name_Label.Name = "Admin_Name_Label";
             this.Admin_Name_Label.Size = new System.Drawing.Size(79, 15);
             this.Admin_Name_Label.TabIndex = 1;
@@ -643,6 +651,16 @@
             this.OnePanel.Name = "OnePanel";
             this.OnePanel.Size = new System.Drawing.Size(545, 406);
             this.OnePanel.TabIndex = 6;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(136, 372);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 33);
+            this.button7.TabIndex = 5;
+            this.button7.Text = "退出";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // SelectionForm
             // 
@@ -730,5 +748,7 @@
         private System.Windows.Forms.ComboBox textBox4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.ColumnHeader handletime;
+        private System.Windows.Forms.Button button7;
     }
 }
